@@ -2,6 +2,9 @@
 
 ![Chatify Preview](preview.png)
 
+### [ 🌐 INTERACTIVE PREVIEW ](https://itsskellyher3.github.io/ChatIfy)
+*Production-grade ephemeral workspace interface.*
+
 A minimalist, high-performance messaging interface designed for ephemeral communication and absolute privacy. 
 
 Developed and designed by **ItsSkellyHer3**, Chatify is an open-source workspace focusing on clean architecture, real-time synchronization, and zero-persistence data handling.
