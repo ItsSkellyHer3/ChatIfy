@@ -1,5 +1,7 @@
 # Chatify
 
+![Chatify Preview](preview.png)
+
 A minimalist, high-performance messaging interface designed for ephemeral communication and absolute privacy. 
 
 Developed and designed by **ItsSkellyHer3**, Chatify is an open-source workspace focusing on clean architecture, real-time synchronization, and zero-persistence data handling.
