@@ -93,6 +93,19 @@
                             <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Username</label>
                             <input type="text" id="username-input" placeholder="Enter your name" class="w-full bg-white dark:bg-black border border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white rounded-xl px-4 py-3 text-lg font-bold outline-none transition-all">
                         </div>
+
+                        <!-- Theme Selection -->
+                        <div class="w-full space-y-2">
+                            <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Theme</label>
+                            <div class="flex gap-2">
+                                <button onclick="App.setTheme('pearl')" class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-all text-sm font-semibold">
+                                    <i data-lucide="sun" class="w-4 h-4"></i> Light
+                                </button>
+                                <button onclick="App.setTheme('onyx')" class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-all text-sm font-semibold">
+                                    <i data-lucide="moon" class="w-4 h-4"></i> Dark
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="space-y-3">
