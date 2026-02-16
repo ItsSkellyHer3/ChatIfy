@@ -26,7 +26,6 @@ export const Chat = {
     },
 
     load: async function(id, name = 'Overview', isReadOnly = false) {
-        // Clear previous state instantly to prevent "stuck" animations
         if(State.activeChannel && API.socket) API.socket.emit('leave', State.activeChannel);
         
         State.activeChannel = id;
@@ -34,9 +33,8 @@ export const Chat = {
         this.clearReply();
         
         const feed = document.getElementById('messages-feed');
-        if (feed) feed.innerHTML = ''; // Wipe immediately
+        if (feed) feed.innerHTML = ''; 
 
-        // Toggle Input Bar visibility based on channel type
         const inputArea = document.querySelector('main > div.p-6.pt-2');
         if (inputArea) {
             if (id === 'getting-started' || isReadOnly) {
@@ -46,7 +44,6 @@ export const Chat = {
             }
         }
 
-        // Header Sync
         const roomLabels = document.querySelectorAll('#room-name, #context-room-name');
         roomLabels.forEach(el => el.innerText = name);
 
@@ -56,7 +53,6 @@ export const Chat = {
         }
 
         try {
-            // Show loading placeholder
             if(feed) feed.innerHTML = '<div class="flex items-center justify-center h-full opacity-20"><div class="w-8 h-8 border-2 border-t-black dark:border-t-white rounded-full animate-spin"></div></div>';
             
             const messages = await API.getMessages(id);
@@ -181,22 +177,23 @@ export const Chat = {
 
         const msgEl = document.createElement('div');
         msgEl.id = m.id;
-        msgEl.className = `flex w-full ${isGrouped ? 'mt-1' : 'mt-6'} ${isOwn ? 'justify-end' : 'justify-start'} group relative`;
+        msgEl.className = `flex w-full ${isGrouped ? 'mt-1' : 'mt-6'} ${isOwn ? 'justify-end' : 'justify-start'} group relative px-4 md:px-0`;
 
         const time = new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
         let replyHtml = '';
         if (m.reply_to) {
             replyHtml = `
-                <div class="flex items-center gap-2 mb-2 text-xs text-gray-400 dark:text-gray-500 pl-1 ${isOwn ? 'mr-2' : 'ml-12'}">
-                    <i data-lucide="corner-up-left" class="w-3 h-3"></i>
-                    <span class="font-bold uppercase tracking-tighter">${m.reply_to.name}</span>
+                <div class="flex items-center gap-2 mb-1.5 text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-tighter ${isOwn ? 'mr-4' : 'ml-12'}">
+                    <i data-lucide="corner-down-right" class="w-3.5 h-3.5"></i>
+                    <span>${m.reply_to.name}</span>
+                    <span class="truncate max-w-[150px] normal-case font-medium opacity-50 italic">"${m.reply_to.text}"</span>
                 </div>
             `;
         }
 
         const bubbleClass = isOwn 
-            ? "bg-black text-white dark:bg-white dark:text-black rounded-[1.5rem] rounded-tr-md shadow-xl" 
+            ? "bg-black text-white dark:bg-white dark:text-black rounded-[1.5rem] rounded-tr-md shadow-lg" 
             : "bg-gray-100 text-black dark:bg-zinc-900 dark:text-white rounded-[1.5rem] rounded-tl-md";
 
         const avatarHtml = (!isOwn && !isGrouped) ? `
@@ -205,33 +202,37 @@ export const Chat = {
 
         const nameHtml = (!isOwn && !isGrouped) ? `
             <div class="flex items-baseline gap-2 mb-1 ml-1">
-                <span class="text-xs font-black text-gray-900 dark:text-white uppercase italic tracking-tight">${m.name}</span>
+                <span class="text-[11px] font-black text-gray-900 dark:text-white uppercase italic tracking-tight">${m.name}</span>
                 <span class="text-[9px] font-bold text-gray-400 uppercase">${time}</span>
             </div>
         ` : '';
 
         msgEl.innerHTML = `
-            <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'} max-w-[85%] lg:max-w-[70%]">
+            <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'} max-w-[85%] lg:max-w-[75%] relative">
                 ${replyHtml}
-                <div class="flex items-end">
+                <div class="flex items-end group/inner relative">
                     ${avatarHtml}
                     <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'}">
                         ${nameHtml}
-                        <div class="${bubbleClass} px-5 py-3 text-[14px] font-medium leading-relaxed relative overflow-hidden group/bubble">
+                        <div class="${bubbleClass} px-5 py-3 text-[14px] font-medium leading-relaxed relative overflow-hidden">
                             ${this.formatText(m.text)}
                             ${m.isTemp ? '<span class="absolute bottom-0 left-0 w-full h-[2px] bg-black/10 dark:bg-white/10 animate-pulse"></span>' : ''}
                         </div>
-                        <div id="reactions-${m.id}" class="flex gap-1 mt-1 empty:hidden">
+                        <div id="reactions-${m.id}" class="flex flex-wrap gap-1 mt-1 empty:hidden">
                             ${this.renderReactions(m.reactions, m.id)}
                         </div>
                     </div>
+
+                    <!-- Modern Action Dock (Inside Layout) -->
+                    <div class="flex gap-1 items-center px-2 py-1 rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md shadow-xl border border-black/5 dark:border-white/5 opacity-0 group-hover/inner:opacity-100 transition-all duration-200 absolute top-0 ${isOwn ? 'right-full mr-2' : 'left-full ml-2'} z-30">
+                        <button onclick="Chat.initReply('${m.id}', '${m.name}', '${this.escapeHtml(m.text)}')" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500 hover:text-black dark:hover:text-white">
+                            <i data-lucide="reply" class="w-3.5 h-3.5"></i>
+                        </button>
+                        <button onclick="API.addReaction('${m.id}', '❤️')" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500 hover:text-red-500">
+                            <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="absolute ${isOwn ? 'left-auto right-full mr-2' : 'left-full ml-2'} top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                <button onclick="Chat.initReply('${m.id}', '${m.name}', '${this.escapeHtml(m.text)}')" class="p-2 rounded-full bg-white dark:bg-zinc-800 shadow-lg text-gray-500 hover:text-black dark:hover:text-white transition-colors">
-                    <i data-lucide="reply" class="w-3.5 h-3.5"></i>
-                </button>
             </div>
         `;
 
@@ -262,12 +263,21 @@ export const Chat = {
     initReply: function(id, name, text) {
         State.replyingTo = { id, name, text: text.substring(0, 60) };
         const preview = document.getElementById('reply-preview');
-        const target = document.getElementById('reply-target');
-        const content = document.getElementById('reply-content');
-        
-        if (preview && target && content) {
-            target.innerText = name;
-            content.innerText = text;
+        if (preview) {
+            preview.innerHTML = `
+                <div class="flex items-center justify-between p-4 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-3xl shadow-2xl animate-fade-in relative z-50">
+                    <div class="flex items-center gap-4 overflow-hidden pl-3 border-l-4 border-black dark:border-white">
+                        <div class="flex flex-col min-w-0">
+                            <span class="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">Capture Context</span>
+                            <span class="text-xs truncate font-bold text-gray-600 dark:text-gray-300">"${text}"</span>
+                        </div>
+                    </div>
+                    <button onclick="Chat.clearReply()" class="p-2 bg-gray-100 dark:bg-zinc-800 rounded-full hover:rotate-90 transition-transform">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `;
+            if(window.lucide) lucide.createIcons();
             preview.classList.remove('hidden');
             gsap.fromTo(preview, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "back.out(1.7)" });
         }
@@ -316,7 +326,7 @@ export const Chat = {
     renderReactions: function(reactions, mid) {
         if (!reactions || Object.keys(reactions).length === 0) return '';
         return Object.entries(reactions).map(([emoji, uids]) => `
-            <button onclick="API.addReaction('${mid}', '${emoji}')" class="px-2 py-0.5 bg-white dark:bg-white/10 rounded-full text-[10px] font-bold shadow-sm hover:scale-110 transition-transform">
+            <button onclick="API.addReaction('${mid}', '${emoji}')" class="px-2 py-0.5 bg-white dark:bg-white/10 border border-black/5 dark:border-white/5 rounded-full text-[10px] font-bold shadow-sm hover:scale-110 transition-transform">
                 ${emoji} <span class="text-gray-500 ml-0.5">${uids.length}</span>
             </button>
         `).join('');
