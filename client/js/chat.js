@@ -112,30 +112,30 @@ export const Chat = {
                     <div class="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto shadow-2xl">
                         <i data-lucide="message-square" class="w-10 h-10 text-black"></i>
                     </div>
-                    <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight uppercase">Architecting Privacy.</h1>
-                    <p class="text-lg text-zinc-500 max-w-xl mx-auto leading-relaxed">Welcome to Chatify, a monochrome workspace designed for secure, ephemeral communication. Developed by ItsSkellyHer3 for the community.</p>
+                    <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight uppercase">System Overview</h1>
+                    <p class="text-lg text-zinc-500 max-w-xl mx-auto leading-relaxed">A workspace for secure and ephemeral communication. Designed by ItsSkellyHer3 with a focus on privacy and open architecture.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 shadow-sm hover:bg-white/10 transition-all">
-                        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6">
-                            <i data-lucide="shield" class="w-6 h-6 text-black"></i>
+                    <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 shadow-sm transition-all">
+                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="shield" class="w-5 h-5 text-black"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-3">Pure Anonymity</h3>
-                        <p class="text-zinc-500 text-sm leading-relaxed">No tracking, no logs, and no historical persistence. Your data exists only in volatile memory and is purged every 60 minutes.</p>
+                        <h3 class="text-xl font-bold text-white mb-3">Ephemeral Data</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed">All communications are stored in volatile memory. A systematic purge occurs every 60 minutes, ensuring zero persistence of message history.</p>
                     </div>
-                    <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 shadow-sm hover:bg-white/10 transition-all">
-                        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6">
-                            <i data-lucide="code" class="w-6 h-6 text-black"></i>
+                    <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 shadow-sm transition-all">
+                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-6">
+                            <i data-lucide="code" class="w-5 h-5 text-black"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-3">Open Architecture</h3>
-                        <p class="text-zinc-500 text-sm leading-relaxed">MIT Licensed and community-driven. Chatify is fully open-source, allowing you to inspect, fork, and self-host with total transparency.</p>
+                        <h3 class="text-xl font-bold text-white mb-3">Open Source</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed">Licensed under MIT. The architecture is transparent and available for community inspection, contribution, and self-hosting.</p>
                     </div>
                 </div>
 
                 <div class="flex justify-center pt-8">
-                    <button onclick="API.downloadSource()" class="px-10 py-4 bg-white text-black rounded-xl font-black uppercase text-xs tracking-widest hover:scale-105 transition-all shadow-xl">
-                        Get Source Code
+                    <button onclick="API.downloadSource()" class="px-10 py-4 bg-white text-black rounded-xl font-black uppercase text-xs tracking-widest transition-all shadow-xl">
+                        Download Source Code
                     </button>
                 </div>
             </div>

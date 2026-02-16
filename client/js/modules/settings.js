@@ -40,8 +40,8 @@ export const Settings = {
         if(tab === 'profile') {
             html = `
                 <div class="max-w-4xl animate-fade">
-                    <h2 class="${headerClass}">My Profile</h2>
-                    <p class="${subHeaderClass}">Manage your identity and how you appear to others on Chatify.</p>
+                    <h2 class="${headerClass}">Account Settings</h2>
+                    <p class="${subHeaderClass}">Configure your public profile and identity attributes within the workspace.</p>
                     
                     <div class="${cardClass} flex flex-col md:flex-row gap-8 items-start">
                         <div class="relative group mx-auto md:mx-0">
@@ -53,23 +53,23 @@ export const Settings = {
                         
                         <div class="flex-1 w-full space-y-6">
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest">Display Name</label>
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-widest">Public Name</label>
                                 <input type="text" id="settings-username" value="${State.user.name}" class="w-full px-4 py-4 bg-slate-50 dark:bg-black/20 border border-slate-200 dark:border-white/10 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none text-slate-900 dark:text-white font-bold transition-all">
                             </div>
                             
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div class="p-4 bg-slate-50 dark:bg-black/20 rounded-xl border border-slate-100 dark:border-white/5">
-                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Plan</span>
-                                    <span class="text-sm font-bold text-slate-900 dark:text-white block mt-1">Free Forever</span>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Tier</span>
+                                    <span class="text-sm font-bold text-slate-900 dark:text-white block mt-1">Open Source</span>
                                 </div>
                                 <div class="p-4 bg-slate-50 dark:bg-black/20 rounded-xl border border-slate-100 dark:border-white/5">
                                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">License</span>
-                                    <span class="text-sm font-bold text-slate-900 dark:text-white block mt-1">MIT Open Source</span>
+                                    <span class="text-sm font-bold text-slate-900 dark:text-white block mt-1">MIT Standard</span>
                                 </div>
                             </div>
 
                             <button onclick="Settings.saveProfile()" class="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/10">
-                                Save Profile
+                                Update Profile
                             </button>
                         </div>
                     </div>
@@ -77,8 +77,8 @@ export const Settings = {
                     <div class="mt-8 flex items-center gap-4 p-6 bg-blue-50 dark:bg-blue-500/5 rounded-2xl border border-blue-100 dark:border-blue-500/10">
                         <img src="https://github.com/ItsSkellyHer3.png" class="w-10 h-10 rounded-full border-2 border-white dark:border-dark" alt="ItsSkellyHer3">
                         <div class="flex flex-col">
-                            <span class="text-sm font-bold text-blue-900 dark:text-blue-400">Made by ItsSkellyHer3</span>
-                            <span class="text-[10px] text-blue-800/60 dark:text-blue-400/60">Supporting the open source community.</span>
+                            <span class="text-sm font-bold text-blue-900 dark:text-blue-400">Developed by ItsSkellyHer3</span>
+                            <span class="text-[10px] text-blue-800/60 dark:text-blue-400/60">Community-driven communication project.</span>
                         </div>
                         <a href="https://github.com/ItsSkellyHer3" target="_blank" class="ml-auto p-2 hover:bg-blue-200/50 dark:hover:bg-blue-500/20 rounded-lg transition-colors">
                             <i data-lucide="github" class="w-4 h-4 text-blue-600 dark:text-blue-400"></i>
@@ -89,31 +89,31 @@ export const Settings = {
         } else if(tab === 'privacy') {
             html = `
                 <div class="max-w-4xl animate-fade">
-                    <h2 class="${headerClass}">Privacy</h2>
-                    <p class="${subHeaderClass}">Control your security modules and local encryption.</p>
+                    <h2 class="${headerClass}">Security Configuration</h2>
+                    <p class="${subHeaderClass}">Manage session security and interface visibility modules.</p>
                     
                     <div class="grid gap-6">
                         <div class="${cardClass} flex items-center justify-between hover:border-slate-300 dark:hover:border-white/20 transition-colors cursor-pointer" onclick="document.getElementById('stealth-check').click()">
                             <div class="flex flex-col gap-1">
-                                <h4 class="font-bold text-slate-900 dark:text-white">Stealth Mode</h4>
-                                <p class="text-xs text-slate-500">Instantly hide the UI with ALT+Q.</p>
+                                <h4 class="font-bold text-slate-900 dark:text-white">Stealth Interface</h4>
+                                <p class="text-xs text-slate-500">Shortcut: ALT+Q</p>
                             </div>
                             <input type="checkbox" id="stealth-check" onchange="Settings.saveSetting('stealthMode', this.checked)" ${s.stealthMode ? 'checked' : ''} class="w-5 h-5 accent-blue-600 cursor-pointer">
                         </div>
 
                         <div class="${cardClass} flex items-center justify-between hover:border-slate-300 dark:hover:border-white/20 transition-colors cursor-pointer" onclick="document.getElementById('blur-check').click()">
                             <div class="flex flex-col gap-1">
-                                <h4 class="font-bold text-slate-900 dark:text-white">Privacy Blur</h4>
-                                <p class="text-xs text-slate-500">Blur messages when window loses focus.</p>
+                                <h4 class="font-bold text-slate-900 dark:text-white">Automatic Blur</h4>
+                                <p class="text-xs text-slate-500">Blur messages when focus is lost.</p>
                             </div>
                             <input type="checkbox" id="blur-check" onchange="Settings.saveSetting('privacyBlur', this.checked)" ${s.privacyBlur ? 'checked' : ''} class="w-5 h-5 accent-blue-600 cursor-pointer">
                         </div>
                         
                         <div class="mt-8 p-6 bg-red-50 dark:bg-red-500/5 border border-red-100 dark:border-red-500/10 rounded-2xl">
-                            <h4 class="font-bold text-red-600 dark:text-red-500 text-sm mb-1">Reset Account</h4>
-                            <p class="text-[11px] text-red-600/70 dark:text-red-500/70 mb-4">This will permanently delete your identity and settings from this browser.</p>
+                            <h4 class="font-bold text-red-600 dark:text-red-500 text-sm mb-1">Purge Local Data</h4>
+                            <p class="text-[11px] text-red-600/70 dark:text-red-500/70 mb-4">Warning: This action will permanently remove your identity keys and local settings.</p>
                             <button onclick="Settings.terminateSession()" class="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-[11px] font-bold transition-colors">
-                                Clear Data
+                                Reset Workspace
                             </button>
                         </div>
                     </div>

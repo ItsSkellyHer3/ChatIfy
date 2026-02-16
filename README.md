@@ -1,83 +1,74 @@
-# 🗨️ Chatify | Monochrome Open Source Workspace
+# Chatify
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-white.svg)](https://opensource.org/licenses/MIT)
-[![Architect: ItsSkellyHer3](https://img.shields.io/badge/Architect-ItsSkellyHer3-black.svg)](https://github.com/ItsSkellyHer3)
-[![Status: Open Source](https://img.shields.io/badge/Status-Open%20Source-white.svg)](#)
+A minimalist, high-performance messaging interface designed for ephemeral communication and absolute privacy. 
 
-A high-performance, ephemeral messaging platform built for teams and individuals who value privacy, speed, and absolute simplicity. Designed with a sleek **Monochrome Aesthetic**, Chatify provides a professional workspace with zero persistence and end-to-end encryption.
+Developed and designed by **ItsSkellyHer3**, Chatify is an open-source workspace focusing on clean architecture, real-time synchronization, and zero-persistence data handling.
 
 ---
 
-## 🏛️ Architect
-Developed and designed by **[ItsSkellyHer3](https://github.com/ItsSkellyHer3)**. Built for the community, by the community.
+## Core Philosophy
+
+Chatify is built on the principle of "Data Volatility." Unlike traditional messaging platforms, Chatify does not maintain long-term archives. All communications are stored in volatile memory and purged systematically every 60 minutes to ensure total privacy.
 
 ---
 
-## ✨ Key Features
+## Technical Specifications
 
-- **🌑 Monochrome UI:** A high-end, brutalist black-and-white design focused on clarity and focus.
-- **🛡️ Privacy First:** No accounts, no cookies, and zero message persistence. Data lives in volatile memory and is purged every 60 minutes.
-- **⚡ Real-time Sync:** Instant message delivery, file sharing, and typing indicators powered by Socket.io and FastAPI.
-- **🎨 Dynamic Theming:** Seamlessly switch between **Onyx (Dark)** and **Pearl (Light)** modes with high-contrast optimization.
-- **📦 Open Source:** Fully MIT Licensed. Host it yourself, modify it, and contribute to the evolution of private messaging.
-- **📎 Media Sharing:** Share files and images instantly with automatic secure cleanup.
+- **Monochrome Interface:** A high-contrast, brutalist design focused on utility and focus.
+- **Bi-directional Sync:** Real-time message transmission via Socket.io.
+- **Stateless Persistence:** Integration with SQLite for short-term caching with automated cleanup cycles.
+- **Architecture:** Node.js reverse proxy handling client assets and FastAPI (Python) managing the core messaging engine.
+- **MIT Licensed:** Open-source architecture for inspection, forking, and self-hosting.
 
 ---
 
-## 🚀 Quick Start
+## Installation and Deployment
 
-### Prerequisites
-- Node.js (v18+)
-- Python 3.12+
-- SQLite (included)
+### System Requirements
+- Node.js 18.0 or higher
+- Python 3.12 or higher
+- Linux/macOS preferred (Windows supported via WSL)
 
-### Installation
+### Setup Procedure
 
-1. **Clone the Repository**
+1. **Clone the repository**
    ```bash
    git clone https://github.com/ItsSkellyHer3/ChatIfy.git
    cd ChatIfy
    ```
 
-2. **Install Node Dependencies**
+2. **Initialize Frontend Services**
    ```bash
    npm install
    ```
 
-3. **Setup Python Environment**
+3. **Configure Python Environment**
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate
    pip install -r requirements.txt
    ```
 
-4. **Run the Application**
+4. **Execute Application**
    ```bash
    chmod +x run.sh
    ./run.sh
    ```
 
-The application will be available at `http://localhost:3000`.
+The service will be accessible at `http://localhost:3000`.
 
 ---
 
-## 🛠️ Tech Stack
+## Project Structure
 
-- **Frontend:** React-style Vanilla JS, Tailwind CSS, Lucide Icons.
-- **Backend:** Node.js (Proxy), FastAPI (Python), SQLAlchemy.
-- **Real-time:** Socket.io (Bi-directional transmission).
-- **Database:** SQLite (Ephemeral message storage).
-
----
-
-## 📜 License
-
-Distributed under the **MIT License**. See `LICENSE` for more information.
+- `/client`: Modern Vanilla JS interface with Tailwind CSS implementation.
+- `/server`: Node.js Express server acting as an API gateway.
+- `/python_service`: FastAPI backend handling business logic and socket events.
 
 ---
 
-## 🤝 Community
+## License
 
-Chatify is a living project. We welcome forks, contributions, and self-hosting enthusiasts. 
+This project is licensed under the MIT License. Contributions and forks are encouraged.
 
-**Made with 🤍 by [ItsSkellyHer3](https://github.com/ItsSkellyHer3)**
+**Lead Architect:** [ItsSkellyHer3](https://github.com/ItsSkellyHer3)
