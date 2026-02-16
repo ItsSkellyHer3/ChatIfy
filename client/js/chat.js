@@ -134,8 +134,8 @@ export const Chat = {
                 </div>
 
                 <div class="flex justify-center pt-8">
-                    <button onclick="API.downloadSource()" class="px-10 py-4 bg-white text-black rounded-xl font-black uppercase text-xs tracking-widest transition-all shadow-xl">
-                        Download Source Code
+                    <button onclick="App.openRepo()" class="px-10 py-4 bg-white text-black rounded-xl font-black uppercase text-xs tracking-widest transition-all shadow-xl">
+                        View Source Code
                     </button>
                 </div>
             </div>

@@ -97,6 +97,10 @@ export const App = {
         this.setTheme(newTheme);
     },
 
+    openRepo: function() {
+        window.open('https://github.com/ItsSkellyHer3/ChatIfy', '_blank');
+    },
+
     setTheme: function(theme) {
         updateSettings({ theme });
     }

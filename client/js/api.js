@@ -123,7 +123,7 @@ export const API = {
     },
 
     downloadSource: function() {
-        window.location.href = '/api/download-source';
+        window.open('https://github.com/ItsSkellyHer3/ChatIfy', '_blank');
     },
 
     sendTyping: function(cid, isTyping) {

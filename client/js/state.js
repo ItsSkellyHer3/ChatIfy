@@ -37,6 +37,7 @@ export const updateSettings = (newSettings) => {
     State.settings = { ...State.settings, ...newSettings };
     localStorage.setItem('chatify_settings', JSON.stringify(State.settings));
     
+    const body = document.body;
     const theme = State.settings.theme || 'onyx';
     
     // Apply Theme
