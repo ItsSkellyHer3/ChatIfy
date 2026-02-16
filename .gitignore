@@ -6,3 +6,4 @@ __pycache__/
 chatify.db
 server/uploads/*
 .git/
+portfolio/
