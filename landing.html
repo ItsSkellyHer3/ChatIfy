@@ -18,9 +18,9 @@
                 extend: {
                     colors: {
                         dark: '#000000',
-                        surface: '#0a0a0a',
-                        accent: '#5865F2',
-                        border: '#1a1a1a',
+                        surface: '#050505',
+                        accent: '#ffffff',
+                        border: '#111111',
                     },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
@@ -32,160 +32,152 @@
     </script>
 
     <style>
-        .hero-gradient {
-            background: radial-gradient(circle at 0% 50%, #111 0%, #000 100%);
+        body { background-color: #000; color: #fff; }
+        .grid-bg {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        .hero-glow {
+            background: radial-gradient(circle at 0% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
         }
         .glass-card {
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.03);
         }
-        .album-container {
-            perspective: 1000px;
+
+        /* ALBUM STACK */
+        .album-stack {
+            position: relative;
+            height: 500px;
+            width: 100%;
         }
-        .album-item {
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .album-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 32px;
+            transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .album-item:hover {
-            transform: translateZ(20px) scale(1.02);
+        .album-layer:nth-child(1) { transform: translateY(0) scale(1); z-index: 3; }
+        .album-layer:nth-child(2) { transform: translateY(30px) scale(0.96); z-index: 2; opacity: 0.6; }
+        .album-layer:nth-child(3) { transform: translateY(60px) scale(0.92); z-index: 1; opacity: 0.3; }
+
+        .album-stack:hover .album-layer:nth-child(2) { transform: translateY(-40px) rotate(-2deg) scale(0.98); opacity: 0.8; }
+        .album-stack:hover .album-layer:nth-child(3) { transform: translateY(40px) rotate(2deg) scale(0.98); opacity: 0.8; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
+        .floating { animation: float 6s ease-in-out infinite; }
     </style>
 </head>
-<body class="bg-dark text-white selection:bg-accent selection:text-white hero-gradient overflow-x-hidden font-sans">
+<body class="grid-bg font-sans overflow-x-hidden">
 
     <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/50 backdrop-blur-md">
-        <div class="max-w-[1800px] mx-auto px-6 md:px-12 h-20 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shadow-lg shadow-accent/20">
-                    <i data-lucide="message-square" class="w-6 h-6 text-white"></i>
+    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/80 backdrop-blur-xl">
+        <div class="max-w-[2400px] mx-auto px-12 h-24 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
+                    <i data-lucide="zap" class="w-7 h-7 text-black"></i>
                 </div>
-                <span class="font-black text-2xl tracking-tighter uppercase italic">Chatify</span>
+                <span class="font-black text-3xl tracking-tighter uppercase italic">Chatify</span>
             </div>
-            <div class="hidden md:flex gap-12 text-[11px] font-bold uppercase tracking-[0.3em] text-zinc-500">
-                <a href="#" class="hover:text-white transition-colors">Infrastructure</a>
-                <a href="#" class="hover:text-white transition-colors">Security</a>
-                <a href="#" class="hover:text-white transition-colors">Registry</a>
+            <div class="hidden xl:flex gap-16 text-[10px] font-bold uppercase tracking-[0.5em] text-zinc-600">
+                <a href="#" class="hover:text-white transition-all">Protocol</a>
+                <a href="#" class="hover:text-white transition-all">Deployment</a>
+                <a href="#" class="hover:text-white transition-all">Registry</a>
             </div>
-            <a href="index.html" class="bg-white text-black px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:scale-105 transition-transform">
-                Access System
+            <a href="index.html" class="bg-white text-black px-10 py-4 rounded-full text-[10px] font-bold uppercase tracking-widest hover:scale-110 transition-transform">
+                Initialize System
             </a>
         </div>
     </nav>
 
-    <!-- MAIN HERO SECTION -->
-    <main class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20">
-        <div class="max-w-[1800px] mx-auto w-full grid lg:grid-cols-2 gap-20 items-center">
+    <!-- HERO SECTION -->
+    <main class="min-h-screen flex items-center relative hero-glow">
+        <div class="max-w-[2400px] mx-auto w-full px-12 flex flex-col lg:flex-row justify-between items-center gap-20">
             
-            <!-- LEFT CONTENT: COMMUNICATION TEXT -->
-            <div class="space-y-12 text-left">
-                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-[10px] font-bold uppercase tracking-[0.2em]">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                    Zero-Persistence Network Active
+            <!-- EXTREME LEFT: CONTENT -->
+            <div class="lg:w-1/2 space-y-16">
+                <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em]">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_15px_#10b981]"></span>
+                    Ephemeral Workspace Online
                 </div>
                 
-                <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-[0.85] uppercase">
-                    Simple<br/>
-                    <span class="text-zinc-800">Communication.</span>
+                <h1 class="text-[10rem] xl:text-[14rem] font-black tracking-tighter leading-[0.8] uppercase flex flex-col">
+                    Simple
+                    <span class="text-zinc-900 ml-40">Communication</span>
                 </h1>
 
-                <p class="text-xl md:text-2xl text-zinc-400 max-w-xl leading-relaxed font-medium">
-                    A minimalist high-performance messaging interface designed for ephemeral workspace and absolute privacy.
-                </p>
-
-                <div class="flex flex-wrap gap-6 pt-4">
-                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
-                        <i data-lucide="shield-check" class="w-6 h-6 text-accent"></i>
-                        <div>
-                            <span class="block text-[10px] text-zinc-500 font-bold uppercase mb-1">Security</span>
-                            <span class="text-sm font-semibold">End-to-End Volatility</span>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
-                        <i data-lucide="clock" class="w-6 h-6 text-zinc-400"></i>
-                        <div>
-                            <span class="block text-[10px] text-zinc-500 font-bold uppercase mb-1">Auto-Purge</span>
-                            <span class="text-sm font-semibold">60-Minute Cleanup</span>
-                        </div>
-                    </div>
+                <div class="flex gap-12 items-start">
+                    <div class="w-px h-32 bg-white/10"></div>
+                    <p class="text-2xl md:text-3xl text-zinc-400 max-w-xl leading-relaxed font-medium">
+                        A brutalist messaging interface designed for ephemeral coordination. Data volatility meets zero-persistence architecture.
+                    </p>
                 </div>
             </div>
 
-            <!-- RIGHT CONTENT: ALBUM / JOIN CHAT -->
-            <div class="relative album-container">
-                <div class="space-y-8">
-                    <div class="flex justify-between items-end mb-4">
-                        <span class="text-zinc-600 font-mono text-xs uppercase tracking-widest">// Visual Documentation</span>
-                        <a href="index.html" class="group flex items-center gap-4 text-white hover:text-accent transition-colors">
-                            <span class="font-bold text-xs uppercase tracking-widest">Join Chat Session</span>
-                            <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-accent group-hover:border-accent transition-all">
-                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                            </div>
-                        </a>
+            <!-- EXTREME RIGHT: ACTION & ALBUM -->
+            <div class="lg:w-1/3 w-full space-y-12">
+                <div class="album-stack floating">
+                    <div class="album-layer glass-card">
+                        <img src="assets/images/chatify-home.png" class="w-full h-full object-cover grayscale opacity-80" alt="Home">
                     </div>
-
-                    <!-- Album Grid -->
-                    <div class="grid grid-cols-12 gap-4">
-                        <div class="col-span-12 album-item">
-                            <div class="aspect-video glass-card rounded-3xl overflow-hidden border border-white/5">
-                                <img src="assets/images/chatify-home.png" class="w-full h-full object-cover" alt="System Home">
-                            </div>
-                        </div>
-                        <div class="col-span-6 album-item">
-                            <div class="aspect-square glass-card rounded-3xl overflow-hidden border border-white/5">
-                                <img src="assets/images/chatify-chat.png" class="w-full h-full object-cover" alt="Interface">
-                            </div>
-                        </div>
-                        <div class="col-span-6 album-item">
-                            <div class="aspect-square glass-card rounded-3xl overflow-hidden border border-white/5">
-                                <img src="assets/images/chatify-settings.png" class="w-full h-full object-cover" alt="Registry">
-                            </div>
-                        </div>
+                    <div class="album-layer glass-card">
+                        <img src="assets/images/chatify-chat.png" class="w-full h-full object-cover grayscale opacity-80" alt="Chat">
                     </div>
-
-                    <div class="p-8 rounded-3xl bg-accent/10 border border-accent/20 flex items-center justify-between">
-                        <div class="space-y-1">
-                            <span class="block text-[10px] text-accent font-black uppercase tracking-[0.2em]">Operational Status</span>
-                            <span class="text-sm font-bold">Node.js / FastAPI Integrated</span>
-                        </div>
-                        <div class="flex -space-x-3">
-                            <img src="https://avatars.githubusercontent.com/ItsSkellyHer3" class="w-10 h-10 rounded-full border-2 border-dark" alt="User">
-                            <div class="w-10 h-10 rounded-full bg-zinc-800 border-2 border-dark flex items-center justify-center text-[10px] font-bold">
-                                +99
-                            </div>
-                        </div>
+                    <div class="album-layer glass-card">
+                        <img src="assets/images/chatify-settings.png" class="w-full h-full object-cover grayscale opacity-80" alt="Settings">
                     </div>
                 </div>
+
+                <div class="flex justify-end pr-8">
+                    <a href="index.html" class="group flex items-center gap-8 text-white hover:text-zinc-400 transition-all">
+                        <div class="text-right space-y-1">
+                            <span class="block font-black text-2xl uppercase tracking-tighter italic">Join Session</span>
+                            <span class="block text-[10px] text-zinc-600 font-bold uppercase tracking-widest">Authentication Required</span>
+                        </div>
+                        <div class="w-20 h-20 rounded-full border-2 border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all overflow-hidden relative">
+                            <i data-lucide="arrow-right" class="w-8 h-8 group-hover:text-black transition-colors relative z-10"></i>
+                            <div class="absolute inset-0 bg-white scale-0 group-hover:scale-100 transition-transform origin-center"></div>
+                        </div>
+                    </a>
+                </div>
             </div>
+
         </div>
     </main>
 
     <!-- FOOTER -->
-    <footer class="py-12 border-t border-white/5 px-12 mt-20">
-        <div class="max-w-[1800px] mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-            <p class="text-[10px] text-zinc-600 uppercase tracking-[0.3em] font-bold">
-                &copy; 2026 Chatify Zero-Persistence Network
-            </p>
-            <div class="flex gap-12 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                <a href="https://github.com/ItsSkellyHer3/ChatIfy" class="hover:text-white transition-colors">GitHub</a>
-                <a href="mailto:adhyasthareihan@gmail.com" class="hover:text-white transition-colors">Developer</a>
+    <footer class="py-12 border-t border-white/5 px-12">
+        <div class="max-w-[2400px] mx-auto flex flex-col lg:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-8">
+                <span class="text-[11px] font-black text-zinc-800 uppercase tracking-[0.5em]">Chatify Zero</span>
+                <span class="w-12 h-[1px] bg-white/5"></span>
+                <span class="text-[11px] font-bold text-zinc-600 uppercase tracking-widest italic">ItsSkellyHer3 Integrated</span>
             </div>
+            
+            <div class="flex gap-20 text-[10px] font-bold uppercase tracking-[0.4em] text-zinc-700">
+                <a href="#" class="hover:text-white">Secure Shell</a>
+                <a href="#" class="hover:text-white">Neural Uplink</a>
+                <a href="#" class="hover:text-white">Bypass Core</a>
+            </div>
+
+            <p class="text-[10px] text-zinc-800 font-bold uppercase tracking-widest">
+                &copy; 2026 Registry 0xAF92
+            </p>
         </div>
     </footer>
 
     <script>
         lucide.createIcons();
-        
-        // Simple entry animation
-        gsap.from("h1", { opacity: 0, x: -50, duration: 1, ease: "power4.out" });
-        gsap.from(".album-item", { 
-            opacity: 0, 
-            y: 50, 
-            duration: 1, 
-            stagger: 0.2, 
-            ease: "power3.out",
-            delay: 0.5 
-        });
+        gsap.from("h1", { opacity: 0, y: 100, duration: 1.5, ease: "power4.out" });
+        gsap.from(".album-layer", { opacity: 0, x: 100, duration: 1.5, stagger: 0.2, ease: "power4.out", delay: 0.5 });
     </script>
 </body>
 </html>
