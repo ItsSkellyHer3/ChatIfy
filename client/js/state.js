@@ -26,13 +26,6 @@ export const clearUser = () => {
     window.location.href = '/';
 };
 
-export const toggleTrust = (uid) => {
-    const index = State.trustedPeers.indexOf(uid);
-    if (index === -1) State.trustedPeers.push(uid);
-    else State.trustedPeers.splice(index, 1);
-    localStorage.setItem('chatify_trusted', JSON.stringify(State.trustedPeers));
-};
-
 export const updateSettings = (newSettings) => {
     State.settings = { ...State.settings, ...newSettings };
     localStorage.setItem('chatify_settings', JSON.stringify(State.settings));
@@ -41,26 +34,21 @@ export const updateSettings = (newSettings) => {
     const body = document.body;
     const theme = State.settings.theme || 'onyx';
     
-    // Theme Application
+    // Strict Theme Application
     if(theme === 'pearl') {
-        root.setAttribute('data-theme', 'light');
         root.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
+        root.style.colorScheme = 'light';
     } else {
-        root.removeAttribute('data-theme');
         root.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
+        root.style.colorScheme = 'dark';
     }
 
-    // Body classes (ensure body exists)
     if(body) {
-        body.classList.toggle('dark', theme !== 'pearl');
         body.classList.toggle('stealth-mode', !!State.settings.stealthMode);
-        
         // Font Scaling
-        if(State.settings.fontSize === 'small') body.style.fontSize = '13px';
-        else if(State.settings.fontSize === 'large') body.style.fontSize = '17px';
-        else body.style.fontSize = '15px';
+        if(State.settings.fontSize === 'small') body.style.fontSize = '14px';
+        else if(State.settings.fontSize === 'large') body.style.fontSize = '18px';
+        else body.style.fontSize = '16px';
     }
 
     if(window.lucide) lucide.createIcons();
