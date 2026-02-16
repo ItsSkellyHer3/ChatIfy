@@ -17,16 +17,18 @@ window.Settings = Settings;
 export const App = {
     start: async function() {
         console.log("[Chatify] Application started.");
+        
+        // Ensure theme is applied on boot
         updateSettings({});
 
         // Global Handlers
         window.onblur = () => {
             if(State.settings.privacyBlur) document.body.classList.add('blur-sm');
-            document.title = "Chatify | Secure";
+            document.title = "Chatify";
         };
         window.onfocus = () => {
             document.body.classList.remove('blur-sm');
-            document.title = "Chatify | Online";
+            document.title = "Chatify";
         };
 
         window.onkeydown = (e) => {
@@ -43,12 +45,16 @@ export const App = {
             if(!State.user) { window.location.href = '/'; return; }
             this.initSettingsUI();
         } else {
+            // Landing page - REDIRECT if already logged in
+            if(State.user && State.user.uid) {
+                window.location.href = '/chat.html';
+                return;
+            }
             this.initLandingUI();
         }
     },
 
     initLandingUI: function() {
-        // Landing page logic if needed
         if(window.lucide) lucide.createIcons();
     },
 
@@ -93,7 +99,8 @@ export const App = {
     },
 
     toggleTheme: function() {
-        const newTheme = State.settings.theme === 'pearl' ? 'onyx' : 'pearl';
+        const currentTheme = State.settings.theme || 'onyx';
+        const newTheme = currentTheme === 'pearl' ? 'onyx' : 'pearl';
         this.setTheme(newTheme);
     },
 
