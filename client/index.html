@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -11,22 +11,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/style.css?v=13.0.6">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        dark: '#000000',
-                        surface: '#050505',
-                        accent: '#ffffff',
-                        border: '#111111',
-                    },
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
@@ -34,97 +28,81 @@
     </script>
 
     <style>
-        body { background-color: #000; color: #fff; }
-        .grid-bg {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
+        body { 
+            background-color: #ffffff; 
+            color: #111111;
+            -webkit-font-smoothing: antialiased;
         }
-        .hero-glow {
-            background: radial-gradient(circle at 0% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-        }
-        .glass-card {
-            background: rgba(10, 10, 10, 0.5);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+        .dark body {
+            background-color: #000000;
+            color: #ffffff;
         }
     </style>
 </head>
-<body class="grid-bg font-sans overflow-x-hidden min-h-screen flex flex-col selection:bg-white selection:text-black">
+<body class="font-sans min-h-screen flex flex-col">
 
-    <!-- NAVIGATION -->
-    <nav class="fixed top-0 w-full z-50 border-b border-white/5 bg-black/80 backdrop-blur-xl">
-        <div class="max-w-[2800px] mx-auto px-6 md:px-12 h-24 flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
-                    <i data-lucide="zap" class="w-7 h-7 text-black"></i>
+    <!-- Navigation -->
+    <nav class="w-full border-b border-gray-100 dark:border-white/5 bg-white dark:bg-black">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center">
+                    <i data-lucide="message-square" class="w-5 h-5 text-white dark:text-black"></i>
                 </div>
-                <span class="font-black text-3xl tracking-tighter uppercase italic">Chatify</span>
+                <span class="font-bold text-xl">Chatify</span>
             </div>
             
-            <div class="flex items-center gap-6">
-                <a href="https://github.com/ItsSkellyHer3/ChatIfy" target="_blank" class="flex items-center gap-3 group">
-                    <img src="https://avatars.githubusercontent.com/ItsSkellyHer3" class="w-8 h-8 rounded-full border border-white/10 grayscale group-hover:grayscale-0 transition-all" alt="ItsSkellyHer3">
-                    <span class="hidden sm:inline text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 group-hover:text-white">Developed by ItsSkellyHer3</span>
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/ItsSkellyHer3" target="_blank" class="flex items-center gap-2 group">
+                    <img src="https://avatars.githubusercontent.com/ItsSkellyHer3" class="w-7 h-7 rounded-full border border-gray-100 dark:border-white/10" alt="ItsSkellyHer3">
+                    <span class="text-sm font-semibold text-gray-500 group-hover:text-black dark:group-hover:text-white transition-colors">ItsSkellyHer3</span>
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO / LOGIN SECTION -->
-    <main class="flex-1 flex items-center relative hero-glow px-6 md:px-12 pt-24">
-        <div class="max-w-[2800px] mx-auto w-full flex flex-col lg:flex-row justify-between items-center gap-20">
+    <!-- Hero / Login Section -->
+    <main class="flex-1 flex items-center px-6">
+        <div class="max-w-7xl mx-auto w-full flex flex-col lg:flex-row justify-between items-center gap-16 py-20">
             
-            <!-- EXTREME LEFT: CONTENT -->
-            <div class="lg:w-1/2 space-y-16">
-                <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em]">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_15px_#10b981]"></span>
-                    Secure Communication Layer Active
-                </div>
-                
-                <div class="space-y-4">
-                    <h1 class="text-[8rem] xl:text-[12rem] font-black tracking-tighter leading-[0.75] uppercase">
-                        Simple
-                    </h1>
-                    <h1 class="text-[8rem] xl:text-[12rem] font-black tracking-tighter leading-[0.75] uppercase text-zinc-900 ml-20 xl:ml-40">
-                        Communication
-                    </h1>
-                </div>
-
-                <div class="flex gap-12 items-start">
-                    <div class="w-px h-32 bg-white/10"></div>
-                    <p class="text-2xl md:text-3xl text-zinc-400 max-w-xl leading-relaxed font-medium">
-                        A clean, professional workspace for real-time collaboration. Engineered for performance and minimalist coordination.
-                    </p>
+            <!-- Left Side: Simple Text -->
+            <div class="lg:w-1/2 space-y-6 text-left">
+                <h1 class="text-6xl md:text-8xl font-extrabold tracking-tight leading-none">
+                    Simple <br>
+                    <span class="text-gray-300 dark:text-gray-800">Communication.</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-500 font-medium max-w-lg leading-relaxed">
+                    A clean and open-source messaging application. Built for performance and privacy.
+                </p>
+                <div class="flex gap-3 pt-2">
+                    <span class="px-3 py-1 bg-gray-100 dark:bg-white/5 rounded-md text-xs font-bold text-gray-500 uppercase tracking-wider">Open Source</span>
+                    <span class="px-3 py-1 bg-gray-100 dark:bg-white/5 rounded-md text-xs font-bold text-gray-500 uppercase tracking-wider">Privacy Focused</span>
                 </div>
             </div>
 
-            <!-- EXTREME RIGHT: JOIN CHAT CARD -->
-            <div class="lg:w-1/3 w-full lg:flex justify-end lg:pl-20">
-                <div class="w-full max-w-md glass-card p-10 rounded-[40px] space-y-10 border border-white/10 relative">
-                    <div class="flex flex-col items-center gap-8">
+            <!-- Right Side: Simple Join Card -->
+            <div class="lg:w-full max-w-sm">
+                <div class="bg-gray-50 dark:bg-white/5 p-8 md:p-10 rounded-3xl border border-gray-100 dark:border-white/10 shadow-sm space-y-8">
+                    <div class="flex flex-col items-center gap-6">
                         <div class="relative group cursor-pointer" onclick="Auth.randomizeAvatar()">
-                            <div class="absolute -inset-4 bg-white/5 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <img id="landing-avatar" src="https://api.dicebear.com/7.x/micah/svg?seed=Chatify" class="w-28 h-28 rounded-[32px] bg-white/5 object-cover border border-white/10 grayscale group-hover:grayscale-0 transition-all duration-500 relative z-10">
-                            <div class="absolute -bottom-2 -right-2 bg-white text-black p-2.5 rounded-xl shadow-2xl z-20">
-                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            <img id="landing-avatar" src="https://api.dicebear.com/7.x/micah/svg?seed=Chatify" class="w-24 h-24 rounded-2xl bg-white dark:bg-black object-cover border border-gray-100 dark:border-white/10 shadow-sm">
+                            <div class="absolute -bottom-2 -right-2 bg-black dark:bg-white text-white dark:text-black p-2 rounded-lg shadow-lg">
+                                <i data-lucide="refresh-cw" class="w-3 h-3"></i>
                             </div>
                         </div>
                         
                         <div class="w-full space-y-2">
-                            <label class="text-[10px] font-black text-zinc-500 uppercase tracking-[0.3em] ml-2">Identify As</label>
-                            <input type="text" id="username-input" placeholder="Enter username..." class="w-full bg-white/5 border border-white/5 focus:border-white focus:bg-white/10 rounded-2xl px-6 py-4 text-xl font-bold outline-none transition-all placeholder:text-zinc-700">
+                            <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Username</label>
+                            <input type="text" id="username-input" placeholder="Enter your name" class="w-full bg-white dark:bg-black border border-gray-200 dark:border-white/10 focus:border-black dark:focus:border-white rounded-xl px-4 py-3 text-lg font-bold outline-none transition-all">
                         </div>
                     </div>
 
-                    <div class="space-y-4">
-                        <button id="start-btn" onclick="Auth.createSession()" class="w-full h-16 bg-white text-black rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 group">
-                            Join Chat Session <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                    <div class="space-y-3">
+                        <button id="start-btn" onclick="Auth.createSession()" class="w-full h-14 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold transition-all hover:opacity-90 active:scale-95 flex items-center justify-center gap-2">
+                            Join Chat <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
-                    </div>
-
-                    <div class="pt-6 border-t border-white/5 flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-zinc-600">
-                        <span>Status: Online</span>
-                        <span>0xAF92-SECURE</span>
+                        <a href="https://github.com/ItsSkellyHer3/ChatIfy" target="_blank" class="w-full h-14 flex items-center justify-center font-bold text-sm text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+                            View on GitHub
+                        </a>
                     </div>
                 </div>
             </div>
@@ -132,13 +110,12 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="w-full max-w-[2800px] mx-auto p-12 flex flex-col sm:flex-row justify-between items-center gap-8 border-t border-white/5">
-        <span class="text-[10px] font-black text-zinc-700 uppercase tracking-[0.3em]">&copy; 2026 ItsSkellyHer3 Integrated</span>
-        <div class="flex gap-12 text-[10px] font-bold text-zinc-600 uppercase tracking-widest">
-            <a href="#" class="hover:text-white transition-colors">Privacy Protocol</a>
-            <a href="#" class="hover:text-white transition-colors">Neural Bypass</a>
-            <a href="https://github.com/ItsSkellyHer3" class="hover:text-white transition-colors">Developer</a>
+    <!-- Footer -->
+    <footer class="w-full max-w-7xl mx-auto p-8 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-gray-50 dark:border-white/5">
+        <span class="text-sm font-medium text-gray-400">&copy; 2026 Adhyastha Reihan (ItsSkellyHer3)</span>
+        <div class="flex gap-8 text-xs font-bold text-gray-400 uppercase tracking-widest">
+            <a href="https://github.com/ItsSkellyHer3" class="hover:text-black dark:hover:text-white transition-colors">Developer</a>
+            <a href="mailto:adhyasthareihan@gmail.com" class="hover:text-black dark:hover:text-white transition-colors">Email</a>
         </div>
     </footer>
 
