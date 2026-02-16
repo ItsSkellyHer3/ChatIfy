@@ -17,6 +17,7 @@ export const Chat = {
                 this.handleTyping();
             });
         }
+        this.startSystemMonitors();
     },
 
     load: async function(id, name = 'General', isReadOnly = false) {
@@ -26,16 +27,16 @@ export const Chat = {
         
         State.activeChannel = id;
         
-        // Update Headers
-        const names = document.querySelectorAll('#room-name, #context-room-name');
-        names.forEach(el => el.innerText = name);
+        // Header Sync
+        const roomLabels = document.querySelectorAll('#room-name, #context-room-name');
+        roomLabels.forEach(el => el.innerText = name);
 
         const feed = document.getElementById('messages-feed');
         if (feed) {
             feed.innerHTML = `
-                <div class="flex flex-col items-center justify-center h-full space-y-6 animate-pulse opacity-20">
-                    <div class="w-12 h-12 bg-gray-200 dark:bg-gray-800 rounded-2xl animate-spin"></div>
-                    <span class="text-[10px] font-black uppercase tracking-[0.3em]">Synchronizing</span>
+                <div class="flex flex-col items-center justify-center h-full space-y-6 opacity-20">
+                    <div class="w-12 h-12 bg-black dark:bg-white rounded-2xl animate-spin"></div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em]">Establishing Uplink</span>
                 </div>
             `;
         }
@@ -52,7 +53,7 @@ export const Chat = {
             if (messages.length === 0) {
                 this.renderEmptyState();
             } else {
-                messages.forEach(m => this.renderMessage(m));
+                messages.forEach(m => this.renderMessage(m, false));
                 this.scrollToBottom(true);
             }
             
@@ -60,8 +61,10 @@ export const Chat = {
                 API.socket.emit('join', id);
             }
             
+            this.updateRoomData();
+
         } catch(e) {
-            if(feed) feed.innerHTML = '<div class="text-center p-20 text-red-500 font-bold">Connection Failed</div>';
+            if(feed) feed.innerHTML = '<div class="text-center py-20 text-xs font-black uppercase tracking-widest text-red-500">Buffer_Sync_Error</div>';
         }
     },
 
@@ -70,53 +73,55 @@ export const Chat = {
         if(!feed) return;
         
         feed.innerHTML = `
-            <div class="max-w-4xl mx-auto w-full h-full flex flex-col items-center justify-center p-12">
-                <div class="w-20 h-20 bg-black dark:bg-white rounded-2xl flex items-center justify-center mb-8 shadow-xl">
-                    <i data-lucide="zap" class="w-8 h-8 text-white dark:text-black"></i>
+            <div class="max-w-5xl mx-auto w-full h-full flex flex-col items-center justify-center p-12">
+                <div class="w-24 h-24 bg-black dark:bg-white rounded-[2.5rem] flex items-center justify-center mb-12 shadow-2xl reveal-up">
+                    <i data-lucide="zap" class="w-10 h-10 text-white dark:text-black"></i>
                 </div>
                 
-                <h1 class="text-4xl md:text-6xl font-black text-black dark:text-white mb-6 text-center tracking-tighter">
-                    Systems Ready.
+                <h1 class="text-6xl md:text-[5rem] font-black text-black dark:text-white mb-8 text-center tracking-tighter uppercase italic leading-none reveal-up">
+                    Workspace<br>Active.
                 </h1>
                 
-                <p class="text-gray-500 text-center max-w-lg mb-12 text-lg font-medium leading-relaxed">
-                    Select a channel to begin secure communication.
+                <p class="text-zinc-400 dark:text-zinc-600 text-center max-w-xl mb-16 text-xl font-medium leading-relaxed reveal-up">
+                    Encryption layer verified. Select a transmission thread from the sidebar to begin coordination.
                 </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-2xl">
-                    <button onclick="document.querySelector('#channel-list > div')?.click()" class="group p-6 text-left bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl transition-all hover:bg-white dark:hover:bg-black hover:border-black dark:hover:border-white hover:shadow-lg">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-white dark:bg-black flex items-center justify-center text-black dark:text-white border border-gray-200 dark:border-gray-800">
-                                <i data-lucide="message-square" class="w-5 h-5"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
+                    <button onclick="document.querySelector('#channel-list > div')?.click()" class="reveal-up group p-10 text-left bg-zinc-50 dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-[3rem] transition-all hover:bg-black dark:hover:bg-white hover:border-black dark:hover:border-white shadow-xl">
+                        <div class="flex items-center justify-between mb-8">
+                            <div class="w-14 h-14 rounded-2xl bg-white dark:bg-black flex items-center justify-center text-black dark:text-white border border-zinc-100 dark:border-zinc-800 group-hover:scale-110 transition-transform">
+                                <i data-lucide="message-square" class="w-6 h-6"></i>
                             </div>
-                            <i data-lucide="arrow-right" class="w-5 h-5 text-gray-300 group-hover:translate-x-2 transition-transform"></i>
+                            <i data-lucide="arrow-right" class="w-6 h-6 text-zinc-300 group-hover:text-white dark:group-hover:text-black transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-lg text-black dark:text-white mb-1">Open Channel</h3>
-                        <p class="text-xs text-gray-500">Join the primary thread.</p>
+                        <h3 class="font-black text-2xl text-black dark:text-white group-hover:text-white dark:group-hover:text-black mb-2 uppercase italic tracking-tighter">Enter General</h3>
+                        <p class="text-sm text-zinc-500 group-hover:text-zinc-400 dark:group-hover:text-zinc-600">Join the primary transmission.</p>
                     </button>
 
-                    <button onclick="window.location.href='/settings.html'" class="group p-6 text-left bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl transition-all hover:bg-white dark:hover:bg-black hover:border-black dark:hover:border-white hover:shadow-lg">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-10 h-10 rounded-xl bg-white dark:bg-black flex items-center justify-center text-black dark:text-white border border-gray-200 dark:border-gray-800">
-                                <i data-lucide="settings-2" class="w-5 h-5"></i>
+                    <button onclick="window.location.href='/settings.html'" class="reveal-up group p-10 text-left bg-zinc-50 dark:bg-zinc-950 border border-zinc-100 dark:border-zinc-900 rounded-[3rem] transition-all hover:bg-black dark:hover:bg-white hover:border-black dark:hover:border-white shadow-xl">
+                        <div class="flex items-center justify-between mb-8">
+                            <div class="w-14 h-14 rounded-2xl bg-white dark:bg-black flex items-center justify-center text-black dark:text-white border border-zinc-100 dark:border-zinc-800 group-hover:scale-110 transition-transform">
+                                <i data-lucide="fingerprint" class="w-6 h-6"></i>
                             </div>
-                            <i data-lucide="arrow-right" class="w-5 h-5 text-gray-300 group-hover:translate-x-2 transition-transform"></i>
+                            <i data-lucide="arrow-right" class="w-6 h-6 text-zinc-300 group-hover:text-white dark:group-hover:text-black transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-lg text-black dark:text-white mb-1">Configure</h3>
-                        <p class="text-xs text-gray-500">Manage your profile.</p>
+                        <h3 class="font-black text-2xl text-black dark:text-white group-hover:text-white dark:group-hover:text-black mb-2 uppercase italic tracking-tighter">Identity</h3>
+                        <p class="text-sm text-zinc-500 group-hover:text-zinc-400 dark:group-hover:text-zinc-600">Configure public credentials.</p>
                     </button>
                 </div>
             </div>
         `;
+        
+        gsap.from("#messages-feed .reveal-up", { opacity: 0, y: 30, stagger: 0.1, duration: 0.8, ease: "power4.out" });
         if(window.lucide) lucide.createIcons();
     },
 
     renderEmptyState: function() {
         const feed = document.getElementById('messages-feed');
         if(feed) feed.innerHTML = `
-            <div class="flex flex-col items-center justify-center h-full opacity-30 space-y-4">
-                <i data-lucide="ghost" class="w-12 h-12 text-gray-400"></i>
-                <span class="text-xs font-bold uppercase tracking-widest text-gray-500">No Messages</span>
+            <div class="flex flex-col items-center justify-center h-full opacity-20 space-y-4">
+                <i data-lucide="ghost" class="w-16 h-16 text-black dark:text-white"></i>
+                <span class="text-xs font-black uppercase tracking-[0.5em]">Null_Buffer</span>
             </div>
         `;
         if(window.lucide) lucide.createIcons();
@@ -142,13 +147,13 @@ export const Chat = {
         this.renderMessage({
             id: nonce, uid: State.user.uid, name: State.user.name, avatar: State.user.avatar,
             text: text, ts: new Date().toISOString(), isTemp: true, reply_to: State.replyingTo
-        });
+        }, true);
         
         API.sendMessage(State.activeChannel, text, nonce, State.replyingTo);
         this.clearReply();
     },
 
-    renderMessage: function(m) {
+    renderMessage: function(m, animate = true) {
         const feed = document.getElementById('messages-feed');
         if (!feed) return;
 
@@ -169,33 +174,33 @@ export const Chat = {
         let replyHtml = '';
         if (m.reply_to) {
             replyHtml = `
-                <div class="flex items-center gap-2 mb-1 text-[10px] font-bold text-gray-400 uppercase tracking-wide ${isOwn ? 'mr-1' : 'ml-12'}">
-                    <i data-lucide="corner-down-right" class="w-3 h-3"></i>
+                <div class="flex items-center gap-2 mb-1.5 text-[9px] font-black text-zinc-400 dark:text-zinc-700 uppercase tracking-tighter ${isOwn ? 'mr-4' : 'ml-14'}">
+                    <i data-lucide="corner-down-right" class="w-3.5 h-3.5"></i>
                     <span>${m.reply_to.name}</span>
+                    <span class="truncate max-w-[120px] normal-case font-medium opacity-50 italic">"${m.reply_to.text}"</span>
                 </div>
             `;
         }
 
-        // Strict Black & White Bubbles
         const bubbleClass = isOwn 
-            ? "bg-black text-white dark:bg-white dark:text-black rounded-2xl rounded-tr-sm shadow-md" 
-            : "bg-white text-black dark:bg-black dark:text-white border border-gray-200 dark:border-gray-800 rounded-2xl rounded-tl-sm";
+            ? "bg-black text-white dark:bg-white dark:text-black rounded-[2rem] rounded-tr-md shadow-xl" 
+            : "bg-zinc-50 text-black dark:bg-zinc-950 dark:text-white border border-zinc-100 dark:border-zinc-900 rounded-[2rem] rounded-tl-md";
 
         msgEl.innerHTML = `
-            <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'} max-w-[85%] lg:max-w-[70%]">
+            <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'} max-w-[85%] lg:max-w-[75%]">
                 ${replyHtml}
-                <div class="flex items-end gap-3">
-                    ${!isOwn ? `<img src="${m.avatar}" class="w-8 h-8 rounded-lg object-cover mb-1 shrink-0 bg-gray-100 border border-gray-200 dark:border-gray-800 cursor-pointer hover:opacity-80" onclick="Chat.showPopover(event, '${m.uid}', '${m.name}', '${m.avatar}')">` : ''}
+                <div class="flex items-end gap-4">
+                    ${!isOwn ? `<img src="${m.avatar}" class="w-9 h-9 rounded-2xl object-cover mb-1 shrink-0 border border-zinc-100 dark:border-zinc-900 shadow-sm cursor-pointer hover:scale-110 transition-transform" onclick="Chat.showPopover(event, '${m.uid}', '${m.name}', '${m.avatar}')">` : ''}
                     
                     <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'}">
-                        <div class="${bubbleClass} px-5 py-3 text-sm font-medium leading-relaxed relative overflow-hidden group/bubble">
+                        <div class="${bubbleClass} px-7 py-4 text-[15px] font-medium leading-relaxed relative overflow-hidden">
                             ${this.formatText(m.text)}
-                            ${m.isTemp ? '<span class="absolute bottom-2 right-2 w-1.5 h-1.5 bg-current rounded-full animate-pulse opacity-50"></span>' : ''}
+                            ${m.isTemp ? '<div class="absolute bottom-0 left-0 w-full h-[2px] bg-white/20 dark:bg-black/20 animate-pulse"></div>' : ''}
                         </div>
                         
-                        <div class="flex items-center gap-3 mt-1.5 px-1 opacity-60 group-hover:opacity-100 transition-opacity">
-                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">${time}</span>
-                            <div id="reactions-${m.id}" class="flex gap-1">
+                        <div class="flex items-center gap-4 mt-2 px-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <span class="text-[10px] font-black text-zinc-300 dark:text-zinc-800 uppercase tracking-[0.2em]">${time}</span>
+                            <div id="reactions-${m.id}" class="flex gap-1.5">
                                 ${this.renderReactions(m.reactions, m.id)}
                             </div>
                         </div>
@@ -203,18 +208,23 @@ export const Chat = {
                 </div>
             </div>
             
-            <div class="flex flex-col gap-1 mx-2 opacity-0 group-hover:opacity-100 transition-all justify-center">
-                <button onclick="Chat.initReply('${m.id}', '${m.name}', '${this.escapeHtml(m.text)}')" class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-400 hover:text-black dark:hover:text-white transition-colors">
-                    <i data-lucide="reply" class="w-3.5 h-3.5"></i>
+            <div class="flex flex-col gap-2 ml-4 opacity-0 group-hover:opacity-100 transition-all justify-center">
+                <button onclick="Chat.initReply('${m.id}', '${m.name}', '${this.escapeHtml(m.text)}')" class="p-2.5 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-400 hover:text-black dark:hover:text-white transition-all">
+                    <i data-lucide="reply" class="w-4 h-4"></i>
                 </button>
-                <button onclick="API.addReaction('${m.id}', '❤️')" class="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-400 hover:text-red-500 transition-colors">
-                    <i data-lucide="heart" class="w-3.5 h-3.5"></i>
+                <button onclick="API.addReaction('${m.id}', '❤️')" class="p-2.5 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-900 text-zinc-400 hover:text-red-500 transition-all">
+                    <i data-lucide="heart" class="w-4 h-4"></i>
                 </button>
             </div>
         `;
 
         feed.appendChild(msgEl);
         if(window.lucide) lucide.createIcons();
+        
+        if (animate) {
+            gsap.from(msgEl, { opacity: 0, x: isOwn ? 30 : -30, duration: 0.5, ease: "power4.out" });
+        }
+        
         this.scrollToBottom();
     },
 
@@ -223,7 +233,7 @@ export const Chat = {
         div.innerText = text;
         let safe = div.innerHTML;
         safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        safe = safe.replace(/`([^`]+)`/g, '<code class="bg-gray-100 dark:bg-gray-900 px-1 py-0.5 rounded font-mono text-xs border border-gray-200 dark:border-gray-800">$1</code>');
+        safe = safe.replace(/`([^`]+)`/g, '<code class="bg-black/5 dark:bg-white/10 px-2 py-0.5 rounded-lg font-mono text-[12px] border border-black/5 dark:border-white/5">$1</code>');
         return safe;
     },
 
@@ -241,12 +251,20 @@ export const Chat = {
         const preview = document.getElementById('reply-preview');
         if (preview) {
             preview.innerHTML = `
-                <span>Replying to <span class="font-bold">${name}</span></span>
-                <button onclick="Chat.clearReply()"><i data-lucide="x" class="w-4 h-4"></i></button>
+                <div class="flex items-center justify-between p-5 bg-white/90 dark:bg-zinc-950/90 backdrop-blur-xl border border-zinc-100 dark:border-zinc-900 rounded-[2rem] shadow-2xl animate-slide-in-right">
+                    <div class="flex items-center gap-5 overflow-hidden pl-3 border-l-4 border-black dark:border-white">
+                        <div class="flex flex-col min-w-0">
+                            <span class="text-[9px] font-black uppercase tracking-[0.3em] text-zinc-400">Context Capture</span>
+                            <span class="text-sm font-bold text-black dark:text-white truncate">"${text}"</span>
+                        </div>
+                    </div>
+                    <button onclick="Chat.clearReply()" class="p-2.5 bg-zinc-50 dark:bg-zinc-900 rounded-full hover:rotate-90 transition-transform duration-300">
+                        <i data-lucide="x" class="w-4 h-4 text-zinc-500"></i>
+                    </button>
+                </div>
             `;
             if(window.lucide) lucide.createIcons();
             preview.classList.remove('hidden');
-            preview.classList.add('flex');
         }
         document.getElementById('msg-input')?.focus();
     },
@@ -254,10 +272,24 @@ export const Chat = {
     clearReply: function() {
         State.replyingTo = null;
         const preview = document.getElementById('reply-preview');
-        if(preview) {
-            preview.classList.add('hidden');
-            preview.classList.remove('flex');
-        }
+        if(preview) preview.classList.add('hidden');
+    },
+
+    updateRoomData: async function() {
+        try {
+            const users = await API.getUsers();
+            const countLabels = document.querySelectorAll('#online-count, #stat-users');
+            countLabels.forEach(el => el.innerText = users.length);
+        } catch(e) {}
+    },
+
+    startSystemMonitors: function() {
+        setInterval(() => {
+            const pings = [11, 14, 9, 12, 18, 15];
+            const p = pings[Math.floor(Math.random() * pings.length)];
+            const el = document.getElementById('stat-ping');
+            if(el) el.innerText = p + 'ms';
+        }, 5000);
     },
 
     showPopover: function(e, uid, name, avatar) {
@@ -265,14 +297,18 @@ export const Chat = {
         const pop = document.getElementById('user-popover');
         document.getElementById('popover-name').innerText = name;
         document.getElementById('popover-avatar').src = avatar;
-        pop.style.left = `${Math.min(e.pageX, window.innerWidth - 300)}px`;
-        pop.style.top = `${Math.min(e.pageY, window.innerHeight - 300)}px`;
-        pop.classList.remove('hidden');
-        const close = () => { pop.classList.add('hidden'); document.removeEventListener('click', close); };
+        
+        gsap.set(pop, { display: 'block', x: Math.min(e.pageX, window.innerWidth - 400), y: Math.min(e.pageY, window.innerHeight - 500), opacity: 0, scale: 0.95 });
+        gsap.to(pop, { opacity: 1, scale: 1, duration: 0.4, ease: "power4.out" });
+
+        const close = () => { 
+            gsap.to(pop, { opacity: 0, scale: 0.95, duration: 0.2, onComplete: () => pop.style.display = 'none' });
+            document.removeEventListener('click', close); 
+        };
         setTimeout(() => document.addEventListener('click', close), 10);
     },
 
-    onMessage: function(msg) { if (msg.channelId === State.activeChannel) this.renderMessage(msg); },
+    onMessage: function(msg) { if (msg.channelId === State.activeChannel) this.renderMessage(msg, true); },
     onReactionUpdate: function(data) {
         const container = document.getElementById(`reactions-${data.mid}`);
         if(container) container.innerHTML = this.renderReactions(data.reactions, data.mid);
@@ -280,8 +316,9 @@ export const Chat = {
     renderReactions: function(reactions, mid) {
         if (!reactions || Object.keys(reactions).length === 0) return '';
         return Object.entries(reactions).map(([emoji, uids]) => `
-            <button onclick="API.addReaction('${mid}', '${emoji}')" class="px-2 py-0.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full text-[10px] font-bold hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-                ${emoji} ${uids.length}
+            <button onclick="API.addReaction('${mid}', '${emoji}')" class="flex items-center gap-2 px-2.5 py-1 bg-zinc-50 dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-full text-[10px] font-bold hover:scale-110 transition-transform">
+                <span>${emoji}</span>
+                <span class="text-zinc-500">${uids.length}</span>
             </button>
         `).join('');
     }

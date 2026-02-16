@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chatify</title>
+    <title>Chatify | System</title>
     
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     
@@ -12,8 +12,9 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.9/purify.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -24,12 +25,13 @@
                     colors: {
                         black: '#000000',
                         white: '#ffffff',
-                        gray: {
-                            50: '#f9f9f9',
-                            100: '#f3f3f3',
-                            200: '#e5e5e5',
-                            800: '#262626',
-                            900: '#171717'
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            800: '#27272a',
+                            900: '#18181b',
+                            950: '#09090b'
                         }
                     }
                 }
@@ -38,211 +40,260 @@
     </script>
     
     <style>
-        body { 
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-        }
-        
-        /* Custom Scrollbar - Minimal */
-        .scroller::-webkit-scrollbar { width: 4px; }
-        .scroller::-webkit-scrollbar-track { background: transparent; }
-        .scroller::-webkit-scrollbar-thumb { background: #e5e5e5; border-radius: 4px; }
-        .dark .scroller::-webkit-scrollbar-thumb { background: #333; }
-        .scroller::-webkit-scrollbar-thumb:hover { background: #999; }
+        body { background-color: #ffffff; color: #000000; overflow: hidden; font-family: 'Inter', sans-serif; }
+        .dark body { background-color: #000000; color: #ffffff; }
 
-        /* Utilities */
-        .no-scrollbar::-webkit-scrollbar { display: none; }
+        /* Scroller Styling */
+        .scroller::-webkit-scrollbar { width: 3px; }
+        .scroller::-webkit-scrollbar-track { background: transparent; }
+        .scroller::-webkit-scrollbar-thumb { background: #000; border-radius: 10px; }
+        .dark .scroller::-webkit-scrollbar-thumb { background: #fff; }
+
+        /* Animation Classes */
+        .reveal-up { opacity: 0; transform: translateY(20px); }
+        .reveal-scale { opacity: 0; transform: scale(0.95); }
+
+        /* High-End Components */
+        .nav-item-active {
+            background: #000;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .dark .nav-item-active {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.05);
+        }
+
+        .border-thin { border-width: 0.5px; }
         
-        .transition-layout { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .panel-shadow { box-shadow: 0 0 50px rgba(0,0,0,0.02); }
+        .dark .panel-shadow { box-shadow: 0 0 50px rgba(255,255,255,0.01); }
     </style>
 </head>
-<body class="bg-white dark:bg-black text-black dark:text-white transition-colors duration-200">
+<body class="transition-colors duration-500">
 
-    <div id="app-root" class="h-screen w-screen flex relative overflow-hidden">
+    <div id="app-shell" class="h-screen w-screen flex overflow-hidden">
         
-        <!-- SIDEBAR (Navigation) -->
-        <!-- Collapses to icons on medium screens (<1280px) to save space for chat -->
-        <aside class="w-20 xl:w-72 h-full flex flex-col shrink-0 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-black z-30 transition-layout">
+        <!-- COLUMN 1: SYSTEM NAVIGATION (Left) -->
+        <aside id="system-nav" class="w-20 xl:w-80 h-full flex flex-col shrink-0 border-r border-zinc-100 dark:border-zinc-900 bg-white dark:bg-black z-30 transition-all duration-500 panel-shadow">
             
-            <!-- Header -->
-            <div class="h-16 flex items-center justify-center xl:justify-start xl:px-6">
-                <div class="flex items-center gap-3 cursor-pointer group" onclick="window.location.href='/'">
-                    <div class="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center transition-transform group-hover:scale-95">
+            <!-- Branding -->
+            <div class="h-20 flex items-center px-6 border-b border-zinc-50 dark:border-zinc-950">
+                <div class="flex items-center gap-4 cursor-pointer group" onclick="window.location.href='/'">
+                    <div class="w-10 h-10 bg-black dark:bg-white rounded-2xl flex items-center justify-center transition-all group-hover:rotate-12">
                         <i data-lucide="message-square" class="w-5 h-5 text-white dark:text-black"></i>
                     </div>
-                    <span class="hidden xl:block font-bold text-xl tracking-tight">Chatify</span>
+                    <div class="hidden xl:flex flex-col">
+                        <span class="font-black text-xl tracking-tighter uppercase leading-none">Chatify</span>
+                        <span class="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mt-1">v13.3 Stable</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Content -->
-            <div class="flex-1 overflow-y-auto scroller py-6 flex flex-col gap-8">
+            <!-- Lists -->
+            <div class="flex-1 overflow-y-auto scroller p-4 space-y-10">
                 
-                <!-- Main Nav -->
-                <div class="px-3 xl:px-4 space-y-1">
-                    <div onclick="Chat.load('getting-started')" class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-900 cursor-pointer transition-colors group" title="Overview">
-                        <i data-lucide="layout-dashboard" class="w-5 h-5 text-gray-800 dark:text-gray-200"></i>
-                        <span class="hidden xl:block text-sm font-semibold">Overview</span>
-                    </div>
-                    <div onclick="window.location.href='/settings.html'" class="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-900 cursor-pointer transition-colors group" title="Settings">
-                        <i data-lucide="settings-2" class="w-5 h-5 text-gray-800 dark:text-gray-200"></i>
-                        <span class="hidden xl:block text-sm font-semibold">Settings</span>
+                <!-- Command Group -->
+                <div class="space-y-2">
+                    <div class="hidden xl:block px-4 text-[10px] font-black text-zinc-300 dark:text-zinc-700 uppercase tracking-[0.2em]">Menu</div>
+                    <div id="command-nav" class="space-y-1">
+                        <div onclick="Chat.load('getting-started')" class="reveal-up flex items-center gap-4 px-4 py-3 rounded-2xl transition-all cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                            <i data-lucide="grid" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                            <span class="hidden xl:block text-sm font-bold">Overview</span>
+                        </div>
+                        <div onclick="window.location.href='/settings.html'" class="reveal-up flex items-center gap-4 px-4 py-3 rounded-2xl transition-all cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                            <i data-lucide="sliders" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                            <span class="hidden xl:block text-sm font-bold">Preferences</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Channels -->
-                <div class="px-3 xl:px-4 space-y-2">
-                    <div class="hidden xl:flex items-center justify-between px-2">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Channels</span>
-                        <i data-lucide="plus" class="w-4 h-4 text-black dark:text-white cursor-pointer hover:opacity-50"></i>
+                <!-- Channels Group -->
+                <div class="space-y-3">
+                    <div class="hidden xl:flex items-center justify-between px-4">
+                        <span class="text-[10px] font-black text-zinc-300 dark:text-zinc-700 uppercase tracking-[0.2em]">Threads</span>
+                        <button class="p-1 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-lg"><i data-lucide="plus" class="w-3.5 h-3.5 opacity-50"></i></button>
                     </div>
-                    <!-- Icon only view for small screens handled by CSS grid/flex logic in JS or just simple stack here -->
-                    <div id="channel-list" class="flex flex-col gap-1">
+                    <div id="channel-list" class="space-y-1">
                         <!-- Populated via JS -->
                     </div>
                 </div>
 
-                <!-- People -->
-                <div class="px-3 xl:px-4 space-y-2">
-                    <div class="hidden xl:flex items-center justify-between px-2">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Direct Messages</span>
+                <!-- Active Group -->
+                <div class="space-y-3">
+                    <div class="hidden xl:flex items-center justify-between px-4">
+                        <span class="text-[10px] font-black text-zinc-300 dark:text-zinc-700 uppercase tracking-[0.2em]">Direct</span>
+                        <span class="text-[9px] font-bold text-green-500 bg-green-500/5 px-2 py-0.5 rounded-full" id="online-count">0</span>
                     </div>
-                    <div id="user-list" class="flex flex-col gap-1">
+                    <div id="user-list" class="space-y-1">
                         <!-- Populated via JS -->
                     </div>
                 </div>
 
             </div>
 
-            <!-- Profile Footer -->
-            <div class="p-4 border-t border-gray-200 dark:border-gray-800">
-                <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-900 cursor-pointer transition-colors" onclick="window.location.href='/settings.html'">
-                    <img id="my-avatar" src="" class="w-9 h-9 rounded-lg bg-gray-100 object-cover border border-gray-200 dark:border-gray-800">
-                    <div class="hidden xl:block flex-1 min-w-0">
-                        <span id="my-name" class="block text-sm font-bold truncate">User</span>
-                        <span class="block text-xs text-gray-400">Online</span>
+            <!-- Identity Footer -->
+            <div class="p-6 border-t border-zinc-50 dark:border-zinc-950">
+                <div class="flex items-center gap-4 p-2 rounded-2xl hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-pointer transition-all reveal-up" onclick="window.location.href='/settings.html'">
+                    <img id="my-avatar" src="" class="w-10 h-10 rounded-2xl object-cover grayscale border-thin border-zinc-200 dark:border-zinc-800 shadow-sm">
+                    <div class="hidden xl:flex flex-col min-w-0">
+                        <span id="my-name" class="font-bold text-sm truncate">User</span>
+                        <span class="text-[10px] font-bold text-green-500 tracking-tight uppercase">Operational</span>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- MAIN CHAT (Center) -->
-        <main class="flex-1 flex flex-col min-w-0 relative bg-white dark:bg-black">
+        <!-- COLUMN 2: BUFFER AREA (Center) -->
+        <main class="flex-1 flex flex-col min-w-0 bg-white dark:bg-black relative z-10">
             
             <!-- Header -->
-            <header class="h-16 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 shrink-0">
-                <div class="flex items-center gap-4">
-                    <!-- Mobile Menu Trigger -->
-                    <button class="xl:hidden p-2 -ml-2 text-black dark:text-white" onclick="document.getElementById('nav-sidebar').classList.toggle('hidden-mobile')"> 
-                        <!-- Logic handled via CSS class toggle usually, simplified here -->
+            <header class="h-20 flex items-center justify-between px-8 border-b border-zinc-50 dark:border-zinc-950 bg-white/80 dark:bg-black/80 backdrop-blur-xl shrink-0">
+                <div class="flex items-center gap-6">
+                    <!-- Nav Toggle (Small Screens) -->
+                    <button class="xl:hidden p-3 bg-zinc-50 dark:bg-zinc-900 rounded-2xl" onclick="UI.toggleNav()">
                         <i data-lucide="menu" class="w-5 h-5"></i>
                     </button>
                     
-                    <div>
-                        <h2 id="room-name" class="text-base font-bold text-black dark:text-white">Overview</h2>
-                        <div class="flex items-center gap-2">
-                            <span id="typing-indicator" class="text-xs font-medium text-gray-400 h-4 block"></span>
-                        </div>
+                    <div class="flex flex-col">
+                        <h2 id="room-name" class="text-xl font-black text-black dark:text-white tracking-tighter uppercase italic">General</h2>
+                        <div id="typing-indicator" class="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] h-4">IDLE_SYSTEM</div>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-2">
-                    <button onclick="Chat.toggleSearch()" class="p-2 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors">
-                        <i data-lucide="search" class="w-5 h-5 text-gray-500"></i>
+                <div class="flex items-center gap-3">
+                    <button onclick="Chat.toggleSearch()" class="p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 rounded-2xl text-zinc-400 transition-all">
+                        <i data-lucide="search" class="w-5 h-5"></i>
                     </button>
-                    <button onclick="App.toggleTheme()" class="p-2 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors">
-                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-white"></i>
-                        <i data-lucide="moon" class="w-5 h-5 dark:hidden text-black"></i>
+                    <button onclick="App.toggleTheme()" class="p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 rounded-2xl text-zinc-400 transition-all">
+                        <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                        <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
                     </button>
-                    <button onclick="UI.toggleContextPanel()" class="p-2 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors">
-                        <i data-lucide="panel-right" class="w-5 h-5 text-gray-500"></i>
+                    <button onclick="UI.toggleContext()" class="p-3 bg-zinc-50 dark:bg-zinc-900 rounded-2xl text-zinc-400 2xl:hidden">
+                        <i data-lucide="more-vertical" class="w-5 h-5"></i>
                     </button>
                 </div>
             </header>
 
-            <!-- Messages -->
-            <div id="messages-feed" class="flex-1 overflow-y-auto scroller p-6 space-y-6">
-                <!-- Messages Injected Here -->
+            <!-- Messages Buffer -->
+            <div id="messages-feed" class="flex-1 overflow-y-auto scroller p-8 lg:p-16 space-y-8 scroll-smooth">
+                <!-- Data Injection -->
             </div>
 
-            <!-- Input -->
-            <div class="p-6 pt-2">
-                <div id="reply-preview" class="hidden mb-2 px-4 py-2 border-l-2 border-black dark:border-white bg-gray-50 dark:bg-gray-900 text-sm text-gray-500 flex justify-between items-center">
-                    <span>Replying...</span>
-                    <button onclick="Chat.clearReply()"><i data-lucide="x" class="w-4 h-4"></i></button>
+            <!-- Input System -->
+            <div id="input-area" class="p-8 pt-0">
+                <div id="reply-preview" class="hidden mb-4 p-4 rounded-3xl bg-zinc-50 dark:bg-zinc-900 border-thin border-zinc-100 dark:border-zinc-800 animate-slide-in-right flex justify-between items-center max-w-4xl mx-auto">
+                    <span>Loading context...</span>
                 </div>
                 
-                <div class="flex items-end gap-2 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-2xl p-2 shadow-sm focus-within:ring-1 ring-black dark:ring-white transition-all">
-                    <button class="p-3 text-gray-400 hover:text-black dark:hover:text-white transition-colors" onclick="document.getElementById('file-upload').click()">
-                        <i data-lucide="plus" class="w-5 h-5"></i>
+                <div class="max-w-4xl mx-auto bg-white dark:bg-zinc-950 border-thin border-zinc-200 dark:border-zinc-800 rounded-[2.5rem] p-3 flex items-end shadow-2xl transition-all focus-within:ring-4 ring-black/5 dark:ring-white/5">
+                    <button class="p-4 text-zinc-400 hover:text-black dark:hover:text-white transition-colors" onclick="document.getElementById('file-upload').click()">
+                        <i data-lucide="plus" class="w-6 h-6"></i>
                     </button>
                     <input type="file" id="file-upload" class="hidden" onchange="Chat.handleUpload(this)">
                     
-                    <textarea id="msg-input" rows="1" class="flex-1 bg-transparent border-none outline-none text-sm py-3 px-2 resize-none max-h-32 text-black dark:text-white placeholder:text-gray-400" placeholder="Type a message..."></textarea>
+                    <textarea id="msg-input" rows="1" placeholder="Type message..." class="flex-1 bg-transparent border-none outline-none text-base font-medium py-4 px-2 max-h-48 resize-none text-black dark:text-white placeholder:text-zinc-600"></textarea>
                     
-                    <button onclick="Chat.send()" class="p-3 bg-black dark:bg-white rounded-xl text-white dark:text-black hover:opacity-90 transition-opacity">
-                        <i data-lucide="arrow-up" class="w-4 h-4"></i>
+                    <button onclick="Chat.send()" class="p-4 bg-black dark:bg-white rounded-full text-white dark:text-black hover:scale-105 active:scale-95 transition-all shadow-xl m-1 group">
+                        <i data-lucide="arrow-up" class="w-6 h-6 group-hover:-translate-y-1 transition-transform"></i>
                     </button>
                 </div>
             </div>
         </main>
 
-        <!-- DETAILS PANEL (Right) -->
-        <!-- Hidden by default on small screens, togglable -->
-        <aside id="context-panel" class="hidden w-80 h-full bg-white dark:bg-black border-l border-gray-200 dark:border-gray-800 flex-col shrink-0 z-20">
-            <div class="p-6 h-full flex flex-col overflow-y-auto scroller">
-                <div class="mb-8 text-center">
-                    <div class="w-20 h-20 bg-gray-50 dark:bg-gray-900 rounded-full mx-auto flex items-center justify-center mb-4">
-                        <i data-lucide="hash" class="w-8 h-8 text-black dark:text-white"></i>
-                    </div>
-                    <h3 id="context-room-name" class="font-bold text-lg">General</h3>
-                    <p class="text-sm text-gray-500">Public Channel</p>
-                </div>
-
-                <div class="space-y-6">
-                    <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Members</h4>
-                        <div id="room-members" class="space-y-2">
-                            <!-- JS Populated -->
-                        </div>
-                    </div>
-
-                    <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Shared Files</h4>
-                        <div class="grid grid-cols-3 gap-2">
-                            <div class="aspect-square bg-gray-100 dark:bg-gray-900 rounded-lg"></div>
-                            <div class="aspect-square bg-gray-100 dark:bg-gray-900 rounded-lg"></div>
-                            <div class="aspect-square bg-gray-100 dark:bg-gray-900 rounded-lg"></div>
-                        </div>
-                    </div>
-                </div>
+        <!-- COLUMN 3: IDENTITY & META (Right) -->
+        <aside id="context-panel" class="hidden 2xl:flex w-[400px] h-full flex-col shrink-0 bg-white dark:bg-black border-l border-zinc-100 dark:border-zinc-900 z-20 panel-shadow transition-all duration-500">
+            <div class="p-10 h-full flex flex-col overflow-y-auto scroller space-y-12">
                 
-                <div class="mt-auto pt-6 text-center">
-                    <p class="text-xs text-gray-400 font-mono">Auto-Purge: 60m</p>
+                <!-- Section: Info -->
+                <div class="text-center space-y-6 reveal-up">
+                    <div class="w-32 h-32 bg-zinc-50 dark:bg-zinc-900 border-thin border-zinc-100 dark:border-zinc-800 rounded-[3rem] mx-auto flex items-center justify-center shadow-xl group">
+                        <i data-lucide="fingerprint" class="w-12 h-12 text-zinc-200 dark:text-zinc-800 group-hover:scale-110 transition-transform"></i>
+                    </div>
+                    <div>
+                        <h3 id="context-room-name" class="font-black text-2xl tracking-tighter uppercase italic">General</h3>
+                        <p class="text-[10px] text-zinc-400 font-bold uppercase tracking-[0.3em] mt-2">Authenticated Thread</p>
+                    </div>
+                </div>
+
+                <!-- Section: Stats -->
+                <div class="grid grid-cols-2 gap-4 reveal-up">
+                    <div class="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-[2rem] border-thin border-zinc-100 dark:border-zinc-800 space-y-1">
+                        <span class="text-[9px] font-black text-zinc-400 dark:text-zinc-600 uppercase tracking-widest">Latency</span>
+                        <p class="text-lg font-bold text-black dark:text-white" id="stat-ping">12ms</p>
+                    </div>
+                    <div class="p-6 bg-zinc-50 dark:bg-zinc-900 rounded-[2rem] border-thin border-zinc-100 dark:border-zinc-800 space-y-1">
+                        <span class="text-[9px] font-black text-zinc-400 dark:text-zinc-600 uppercase tracking-widest">Active</span>
+                        <p class="text-lg font-bold text-black dark:text-white" id="stat-users">0</p>
+                    </div>
+                </div>
+
+                <!-- Section: Gallery -->
+                <div class="space-y-6 reveal-up">
+                    <div class="flex items-center justify-between px-2">
+                        <span class="text-[10px] font-black text-zinc-400 uppercase tracking-[0.2em]">Shared Gallery</span>
+                        <span class="text-[10px] font-bold text-zinc-400 hover:text-black dark:hover:text-white cursor-pointer underline underline-offset-4">Browse All</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="aspect-video bg-zinc-100 dark:bg-zinc-900 rounded-2xl border-thin border-zinc-200 dark:border-zinc-800 overflow-hidden">
+                            <div class="w-full h-full flex items-center justify-center opacity-20"><i data-lucide="image" class="w-6 h-6"></i></div>
+                        </div>
+                        <div class="aspect-video bg-zinc-100 dark:bg-zinc-900 rounded-2xl border-thin border-zinc-200 dark:border-zinc-800 overflow-hidden">
+                            <div class="w-full h-full flex items-center justify-center opacity-20"><i data-lucide="image" class="w-6 h-6"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Auto-Purge -->
+                <div class="mt-auto p-10 bg-black dark:bg-white rounded-[3rem] text-center space-y-4 shadow-2xl reveal-up">
+                    <div class="flex items-center justify-center gap-3">
+                        <i data-lucide="shield-off" class="w-5 h-5 text-zinc-500"></i>
+                        <span class="text-[10px] font-black text-white dark:text-black uppercase tracking-[0.2em]">Purge Cycle</span>
+                    </div>
+                    <p id="app-reset-timer" class="text-5xl font-black text-white dark:text-black tracking-tighter">60:00</p>
+                    <p class="text-[9px] font-medium text-zinc-500 dark:text-zinc-400 uppercase leading-relaxed tracking-widest">Data buffer systematically cleared every 60 minutes.</p>
                 </div>
             </div>
         </aside>
-
     </div>
 
-    <!-- User Popover -->
-    <div id="user-popover" class="fixed hidden bg-white dark:bg-black border border-gray-200 dark:border-gray-800 shadow-xl rounded-xl w-64 z-50 p-4">
-        <div class="flex flex-col items-center text-center">
-            <img id="popover-avatar" src="" class="w-20 h-20 rounded-full bg-gray-100 mb-3 border border-gray-200">
-            <h3 id="popover-name" class="font-bold text-lg">User</h3>
-            <span class="text-xs text-green-500 font-medium mb-4">Online</span>
-            <button onclick="Chat.startDM()" class="w-full py-2 bg-black dark:bg-white text-white dark:text-black rounded-lg text-sm font-bold hover:opacity-90">Message</button>
+    <!-- POPOVERS -->
+    <div id="user-popover" class="fixed hidden bg-white dark:bg-zinc-950 border-thin border-zinc-200 dark:border-zinc-800 shadow-[0_30px_100px_rgba(0,0,0,0.3)] rounded-[3.5rem] w-[360px] z-50 overflow-hidden reveal-scale">
+        <div class="h-40 bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-100 dark:border-zinc-800"></div>
+        <div class="px-10 pb-12 -mt-20 text-center space-y-8">
+            <img id="popover-avatar" src="" class="w-40 h-40 rounded-[3rem] border-[16px] border-white dark:border-zinc-950 mx-auto object-cover shadow-2xl transition-transform hover:scale-105">
+            <div class="space-y-2">
+                <h3 id="popover-name" class="font-black text-3xl tracking-tighter text-black dark:text-white uppercase italic leading-none">Username</h3>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-green-500 shadow-[0_0_15px_#22c55e]"></span>
+                    <span class="text-[10px] font-black text-green-500 uppercase tracking-[0.3em]">Operational Link</span>
+                </div>
+            </div>
+            <button onclick="Chat.startDM()" class="w-full py-6 bg-black dark:bg-white text-white dark:text-black rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-[1.03] active:scale-95 shadow-xl">
+                Open Transmission
+            </button>
         </div>
     </div>
 
     <script type="module" src="js/main.js"></script>
     <script>
-        // Simple Toggle for Context Panel
-        UI.toggleContextPanel = () => {
-            const panel = document.getElementById('context-panel');
-            panel.classList.toggle('hidden');
-            panel.classList.toggle('flex');
+        window.UI = {
+            toggleNav: () => document.getElementById('system-nav').classList.toggle('hidden-mobile'),
+            toggleContext: () => {
+                const panel = document.getElementById('context-panel');
+                panel.classList.toggle('hidden');
+                panel.classList.toggle('flex');
+            }
         };
-        setTimeout(() => lucide.createIcons(), 100);
+
+        // Entrance Animations
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                gsap.to(".reveal-up", { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power4.out" });
+                lucide.createIcons();
+            }, 100);
+        });
     </script>
 </body>
 </html>
