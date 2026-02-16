@@ -5,21 +5,15 @@ export const Chat = {
     typingUsers: new Set(),
     isTyping: false,
     typingTimeout: null,
-    autoDeleteMode: false,
     autoScroll: true,
     activePopoverUid: null,
     commands: [
         { name: '/clear', desc: 'Clear view', icon: 'trash-2' },
-        { name: '/stealth', desc: 'Toggle Stealth Mode', icon: 'eye-off' },
-        { name: '/shrug', desc: '¯\\_(ツ)_/¯', icon: 'smile' },
-        { name: '/help', desc: 'View shortcuts', icon: 'help-circle' }
+        { name: '/shrug', desc: '¯\\_(ツ)_/¯', icon: 'smile' }
     ],
     emojiSets: {
         "Recent": ['😀','😂','😍','🤔','🔥','❤️','✨','🚀'],
-        "Smilies": ['😀','😃','😄','😁','😆','😅','😂','🤣','🥲','😊','😇','🙂','🙃','😉','😌','😍','🥰','😘','😗','😙','😚','😋','😛','😝','😜','🤪','🤨','🧐','🤓','😎','🥸','🤩','🥳','😏','😒','😞','😔','😟','😕','🙁','☹️','😣','😖','😫','😩','🥺','😢','😭','😤','😠','😡','🤬','🤯','😳','🥵','🥶','😱','😨','😰','😥','😓','🤗','🤔','🫣','🤭','🫡','🤫','🫠','🤥','😶','🫥','😐','😑','😬','🙄','😯','😦','😧','😮','😲','🥱','😴','🤤','😪','😵','😵‍💫','🫨','🤐','🥴','🤢','🤮','🤧','🥵','🥶','🤡','👹','👺','👻','💀','☠️','👽','👾','🤖','💩'],
-        "Gestures": ['👋','🤚','🖐️','✋','🖖','👌','🤌','🤏','✌️','🤞','🫰','🤟','🤘','🤙','👈','👉','👆','🖕','👇','👍','👎','✊','👊','🤛','🤜','👏','🙌','👐','🤲','🤝','🙏','✍️','💅','🤳','💪','🦾','🦵','🦿','🦶','👣','👂','🦻','👃','🧠','🫀','🫁','🦷','🦴','👀','👁️','👅','👄','🫦','💋'],
-        "Hearts": ['❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','❤️‍🔥','❤️‍🩹','💔','❣️','💕','💞','💓','💗','💖','💘','💝','💟'],
-        "Objects": ['🚀','🎉','🎊','🎈','🎂','🎆','🎇','🧨','✨','🌟','⭐️','🌈','☀️','☁️','⛅','⛈️','🌤️','🌥️','🌦️','🌧️','🌨️','🌩️','🌪️','💨','🌬️','🌀','🌊','💧','💦','☔','⚡','🔥','💥','❄️','☃️','⛄','☄️','💎','💍','💄','👠','👞','👟','🥾','🥿','👡','👢','🧤','🧣','🎩','🧢','👒','🎓','🎒','💼','👜','👛','👓','🕶️','🥽','🥼','🦺','👔','👕','👖','🧣','🧤','🧥','🧦','👗','👘','🥻','🩱','🩲','🩳','👙']
+        "Smilies": ['😀','😃','😄','😁','😆','😅','😂','🤣','🥲','😊','😇','🙂','🙃','😉','😌','😍','🥰','😘','😗','😙','😚','😋','😛','😝','😜','🤪','🤨','🧐','🤓','😎','🥸','🤩','🥳','😏','😒','😞','😔','😟','😕','🙁','☹️','😣','😖','😫','😩','🥺','😢','😭','😤','😠','😡'],
     },
 
     load: async function(id, name, isReadOnly = false) {
@@ -28,8 +22,7 @@ export const Chat = {
         State.activeChannel = id;
         this.typingUsers.clear();
         this.updateTypingUI();
-        this.closeEmojiPicker();
-
+        
         const roomEl = document.getElementById('room-name');
         if(roomEl) roomEl.innerText = name;
         
@@ -38,10 +31,7 @@ export const Chat = {
 
         const feed = document.getElementById('messages-feed');
         if(feed) {
-            feed.innerHTML = '<div class="flex items-center justify-center py-20 text-xs font-bold text-slate-400 animate-pulse uppercase tracking-widest">Initialising Workspace...</div>';
-            feed.onscroll = () => {
-                this.autoScroll = feed.scrollHeight - feed.scrollTop <= feed.clientHeight + 100;
-            };
+            feed.innerHTML = '<div class="flex items-center justify-center py-20 text-xs font-bold text-slate-400 animate-pulse uppercase tracking-widest">Loading...</div>';
         }
 
         if(id === 'getting-started') {
@@ -54,16 +44,7 @@ export const Chat = {
             if(feed) {
                 feed.innerHTML = '';
                 if(messages.length === 0) {
-                    feed.innerHTML = `
-                        <div class="py-32 flex flex-col items-center text-center opacity-40">
-                            <div class="w-12 h-12 bg-slate-100 dark:bg-white/5 rounded-xl flex items-center justify-center mb-4">
-                                <i data-lucide="message-square" class="w-6 h-6 text-slate-400"></i>
-                            </div>
-                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Empty Workspace</h3>
-                            <p class="text-xs text-slate-500 mt-1 max-w-xs">No historical data found in this buffer.</p>
-                        </div>
-                    `;
-                    if(window.lucide) lucide.createIcons();
+                    feed.innerHTML = `<div class="py-32 flex flex-col items-center text-center opacity-40"><p class="text-sm font-medium text-slate-500">No messages here yet.</p></div>`;
                 } else {
                     messages.forEach(m => this.renderMsg(m.id, m));
                 }
@@ -71,7 +52,7 @@ export const Chat = {
             }
             this.updateRoomInfo(id);
         } catch(e) { 
-            if(feed) feed.innerHTML = '<div class="text-xs font-bold text-red-500 p-8 text-center uppercase tracking-widest">Connection Interrupted</div>';
+            if(feed) feed.innerHTML = '<div class="text-xs font-bold text-red-500 p-8 text-center uppercase tracking-widest">Connection Error</div>';
         }
         
         if(API.socket) API.socket.emit('join', id);
@@ -85,69 +66,19 @@ export const Chat = {
         try {
             const users = await API.getUsers();
             countEl.innerText = users.length;
-            membersEl.innerHTML = users.slice(0, 10).map(u => `
+            membersEl.innerHTML = users.slice(0, 15).map(u => `
                 <div class="flex items-center gap-3 p-2 hover:bg-slate-100 dark:hover:bg-white/5 rounded-xl transition-colors cursor-pointer group" onclick="Chat.showPopover(event, '${u.uid || u.id}', '${u.name}', '${u.avatar}')">
-                    <div class="relative shrink-0">
-                        <img src="${u.avatar}" class="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 border border-white dark:border-white/10 object-cover">
-                        <div class="absolute bottom-0 right-0 w-2 h-2 bg-green-500 border-2 border-white dark:border-black rounded-full"></div>
-                    </div>
+                    <img src="${u.avatar}" class="w-7 h-7 rounded-lg bg-slate-200 dark:bg-slate-800 border border-white dark:border-white/10 object-cover">
                     <div class="flex flex-col min-w-0">
                         <span class="text-xs font-bold text-slate-900 dark:text-white truncate">${u.name}</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-bold tracking-tighter">Connected</span>
+                        <span class="text-[9px] text-green-500 font-bold uppercase tracking-tight">Online</span>
                     </div>
                 </div>
             `).join('');
-            if(users.length > 10) {
-                membersEl.innerHTML += `<div class="text-center py-2 text-[10px] font-bold text-slate-400 uppercase">+ ${users.length - 10} others</div>`;
-            }
         } catch(e) {}
     },
 
-    renderGettingStarted: function() {
-        const feed = document.getElementById('messages-feed');
-        if(!feed) return;
-        feed.innerHTML = `
-            <div class="max-w-3xl mx-auto space-y-12 py-16 animate-fade px-4">
-                <div class="space-y-6 text-center">
-                    <div class="w-16 h-16 bg-black dark:bg-white rounded-2xl flex items-center justify-center mx-auto shadow-xl">
-                        <i data-lucide="message-square" class="w-8 h-8 text-white dark:text-black"></i>
-                    </div>
-                    <h1 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight uppercase">Workspace Protocol</h1>
-                    <p class="text-base md:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed">Chatify is an open-source architecture designed for real-time collaboration. Developed by ItsSkellyHer3 with a focus on absolute privacy.</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="p-8 bg-white dark:bg-white/5 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-sm transition-all">
-                        <div class="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center mb-6">
-                            <i data-lucide="shield" class="w-5 h-5 text-white dark:text-black"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Privacy Standards</h3>
-                        <p class="text-slate-500 text-xs leading-relaxed uppercase font-bold tracking-tight">No data is permanently archived. Message buffers are stored in volatile cache and cleared every 60 minutes.</p>
-                    </div>
-                    <div class="p-8 bg-white dark:bg-white/5 rounded-[2rem] border border-slate-200 dark:border-white/10 shadow-sm transition-all">
-                        <div class="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center mb-6">
-                            <i data-lucide="code" class="w-5 h-5 text-white dark:text-black"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Source Integrity</h3>
-                        <p class="text-slate-500 text-xs leading-relaxed uppercase font-bold tracking-tight">Distributed under MIT License. The project is transparent and available for community inspection.</p>
-                    </div>
-                </div>
-
-                <div class="flex justify-center pt-8">
-                    <button onclick="App.openRepo()" class="px-8 py-3.5 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold uppercase text-xs tracking-widest transition-all shadow-xl hover:scale-105 active:scale-95">
-                        View Source Code
-                    </button>
-                </div>
-            </div>
-        `;
-        if(window.lucide) lucide.createIcons();
-    },
-
     handleTyping: function() {
-        const input = document.getElementById('msg-input');
-        if(input.value.startsWith('/')) this.showCommandSuggestions(input.value);
-        else this.hideCommandSuggestions();
-
         if(!this.isTyping) {
             this.isTyping = true;
             API.sendTyping(State.activeChannel, true);
@@ -156,94 +87,17 @@ export const Chat = {
         this.typingTimeout = setTimeout(() => this.stopTyping(), 3000);
     },
 
-    showCommandSuggestions: function(query) {
-        const popup = document.getElementById('command-suggestions');
-        const list = document.getElementById('command-list');
-        const filtered = this.commands.filter(c => c.name.startsWith(query.toLowerCase()));
-        if(filtered.length > 0) {
-            popup.classList.remove('hidden');
-            list.innerHTML = filtered.map(c => `
-                <button onclick="Chat.useCommand('${c.name}')" class="flex items-center gap-3 p-3 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-colors w-full text-left">
-                    <div class="w-8 h-8 bg-slate-100 dark:bg-white/10 rounded-lg flex items-center justify-center text-slate-500 dark:text-slate-400">
-                        <i data-lucide="${c.icon}" class="w-4 h-4"></i>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="text-xs font-bold text-slate-900 dark:text-white">${c.name}</span>
-                        <span class="text-[10px] text-slate-500 uppercase font-bold">${c.desc}</span>
-                    </div>
-                </button>
-            `).join('');
-            if(window.lucide) lucide.createIcons();
-        } else this.hideCommandSuggestions();
-    },
-
-    hideCommandSuggestions: function() {
-        const popup = document.getElementById('command-suggestions');
-        if(popup) popup.classList.add('hidden');
-    },
-
-    useCommand: function(cmd) {
-        const input = document.getElementById('msg-input');
-        if(cmd === '/clear') document.getElementById('messages-feed').innerHTML = '';
-        else if(cmd === '/stealth') import('./modules/settings.js').then(m => m.Settings.saveSetting('stealthMode', !State.settings.stealthMode));
-        else if(cmd === '/shrug') { input.value = '¯\\_(ツ)_/¯'; this.send(); return; }
-        input.value = '';
-        this.hideCommandSuggestions();
-    },
-
-    toggleEmojiPicker: function() {
-        const picker = document.getElementById('emoji-picker');
-        const isHidden = picker.classList.toggle('hidden');
-        if(!isHidden) {
-            const grid = document.getElementById('emoji-grid');
-            grid.innerHTML = '';
-            Object.entries(this.emojiSets).forEach(([category, set]) => {
-                const label = document.createElement('div');
-                label.className = "col-span-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-4 mb-2 px-2";
-                label.innerText = category;
-                grid.appendChild(label);
-                
-                set.forEach(e => {
-                    const btn = document.createElement('button');
-                    btn.className = "w-9 h-9 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg text-lg transition-transform hover:scale-110";
-                    btn.innerText = e;
-                    btn.onclick = () => this.insertEmoji(e);
-                    grid.appendChild(btn);
-                });
-            });
-        }
-    },
-
-    closeEmojiPicker: function() {
-        const picker = document.getElementById('emoji-picker');
-        if(picker) picker.classList.add('hidden');
-    },
-
-    insertEmoji: function(e) {
-        const input = document.getElementById('msg-input');
-        input.value += e;
-        input.focus();
-    },
-
-    toggleAutoDelete: function() {
-        this.autoDeleteMode = !this.autoDeleteMode;
-        document.getElementById('auto-delete-toggle').classList.toggle('text-red-500', this.autoDeleteMode);
-    },
-
     send: function() {
         const input = document.getElementById('msg-input');
         const text = input.value.trim();
         if(!text || !State.activeChannel) return;
-        if(text.startsWith('/')) { const cmd = text.split(' ')[0]; if(this.commands.some(c => c.name === cmd)) { this.useCommand(cmd); return; } }
 
         this.stopTyping();
         const nonce = Math.random().toString(36).substring(7);
-        this.renderMsg(`temp-${nonce}`, { id: `temp-${nonce}`, nonce, uid: State.user.uid, name: State.user.name, avatar: State.user.avatar, text, ts: new Date().toISOString(), isTemp: true });
+        this.renderMsg(`temp-${nonce}`, { id: `temp-${nonce}`, nonce, uid: State.user.uid, name: State.user.name, avatar: State.user.avatar, text, ts: new Date().toISOString(), isTemp: true, reactions: {} });
         input.value = '';
         API.sendMessage(State.activeChannel, text, nonce, State.replyingTo);
-        State.replyingTo = null;
-        const preview = document.getElementById('reply-preview');
-        if(preview) preview.innerHTML = '';
+        this.clearReply();
     },
 
     renderMsg: function(id, m) {
@@ -255,50 +109,49 @@ export const Chat = {
         const isOwn = m.uid === State.user.uid;
         const div = document.createElement('div');
         div.id = id;
-        div.className = `msg-item animate-fade ${isOwn ? 'own' : ''} ${m.isTemp ? 'opacity-70' : ''}`;
+        div.className = `flex flex-col gap-1 mb-4 animate-fade ${isOwn ? 'items-end' : 'items-start'}`;
         
         const time = dayjs(m.ts).format('HH:mm');
-        
-        let rawText = DOMPurify.sanitize(m.text);
-        rawText = rawText.replace(/```([\s\S]*?)```/g, '<code-block>$1</code-block>');
-        rawText = rawText.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
+        const sanitizedText = DOMPurify.sanitize(m.text);
 
         let replyHtml = '';
         if(m.reply_to) {
             replyHtml = `
-                <div class="flex items-center gap-2 mb-1 opacity-60">
-                    <div class="w-0.5 h-3 bg-slate-300 dark:bg-white/20 rounded-full"></div>
-                    <span class="text-[10px] font-bold uppercase truncate max-w-[200px]">Replied to ${m.reply_to.name}</span>
+                <div class="flex items-center gap-2 mb-1 px-3 py-1 bg-slate-50 dark:bg-white/5 rounded-lg border-l-2 border-slate-300 dark:border-white/20 opacity-60 ml-2">
+                    <span class="text-[10px] font-bold text-slate-500 truncate max-w-[200px]">Replied to ${m.reply_to.name}: ${m.reply_to.text}</span>
                 </div>
             `;
         }
 
-        // Standard Layout
-        div.innerHTML = `
-            ${!isOwn ? `<img src="${m.avatar}" class="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 object-cover shrink-0 cursor-pointer hover:opacity-80 transition-opacity" onclick="Chat.showPopover(event, '${m.uid}', '${m.name}', '${m.avatar}')">` : ''}
-            
-            <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'} min-w-0 max-w-full">
-                ${!isOwn ? `<div class="flex items-baseline gap-2 mb-1 ml-1"><span class="text-xs font-bold text-slate-900 dark:text-white cursor-pointer hover:underline" onclick="Chat.showPopover(event, '${m.uid}', '${m.name}', '${m.avatar}')">${m.name}</span><span class="text-[9px] font-bold text-slate-400 uppercase">${time}</span></div>` : ''}
-                
-                ${replyHtml}
-                
-                <div class="msg-bubble shadow-sm ${isOwn ? '' : 'dark:bg-white/5'}">
-                    <div class="markdown-content text-[14px] font-medium leading-relaxed">${rawText}</div>
-                </div>
-                
-                ${isOwn ? `<div class="text-[9px] font-bold text-slate-400 mt-1 mr-1 uppercase">${time} ${m.isTemp ? '• Sending' : ''}</div>` : ''}
-            </div>
-            
-            <div class="msg-actions">
-                <button onclick="Chat.setReply('${id}', '${m.name}', '${m.text.replace(/'/g, "\\'")}')" class="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg text-slate-400 transition-colors" title="Reply">
-                    <i data-lucide="reply" class="w-3.5 h-3.5"></i>
+        let reactionHtml = '';
+        if(m.reactions && Object.keys(m.reactions).length > 0) {
+            reactionHtml = `<div class="flex flex-wrap gap-1 mt-1">` + Object.entries(m.reactions).map(([emoji, uids]) => `
+                <button onclick="API.addReaction('${id}', '${emoji}')" class="px-2 py-0.5 bg-slate-100 dark:bg-white/10 rounded-full text-[10px] font-bold flex items-center gap-1 hover:bg-slate-200 dark:hover:bg-white/20 transition-colors">
+                    <span>${emoji}</span>
+                    <span class="text-slate-500">${uids.length}</span>
                 </button>
-                <button onclick="API.addReaction('${id}', '👍')" class="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg text-xs transition-transform hover:scale-110">👍</button>
-                <button onclick="API.addReaction('${id}', '🔥')" class="p-1 hover:bg-slate-100 dark:hover:bg-white/10 rounded-lg text-xs transition-transform hover:scale-110">🔥</button>
-                ${isOwn ? `
-                <button onclick="API.deleteMessage('${id}', '${m.uid}')" class="p-1 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg text-slate-400 hover:text-red-500 transition-colors" title="Delete">
-                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                </button>` : ''}
+            `).join('') + `</div>`;
+        }
+
+        div.innerHTML = `
+            ${replyHtml}
+            <div class="flex gap-3 max-w-[85%] ${isOwn ? 'flex-row-reverse' : ''}">
+                <img src="${m.avatar}" class="w-8 h-8 rounded-lg object-cover shrink-0 mt-1 cursor-pointer" onclick="Chat.showPopover(event, '${m.uid}', '${m.name}', '${m.avatar}')">
+                <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'}">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-[11px] font-bold text-slate-900 dark:text-white">${m.name}</span>
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-tighter">${time}</span>
+                    </div>
+                    <div class="px-4 py-2.5 rounded-2xl text-[14px] leading-relaxed shadow-sm ${isOwn ? 'bg-black text-white dark:bg-white dark:text-black rounded-tr-none' : 'bg-slate-100 dark:bg-white/5 dark:text-white rounded-tl-none'}">
+                        ${sanitizedText}
+                    </div>
+                    ${reactionHtml}
+                </div>
+            </div>
+            <div class="flex gap-2 mt-1 px-1 opacity-0 hover:opacity-100 transition-opacity">
+                <button onclick="Chat.setReply('${id}', '${m.name}', '${m.text.replace(/'/g, "\\'")}')" class="text-[10px] font-bold text-slate-400 uppercase hover:text-black dark:hover:text-white transition-colors">Reply</button>
+                <button onclick="API.addReaction('${id}', '👍')" class="text-[10px] hover:scale-125 transition-transform">👍</button>
+                <button onclick="API.addReaction('${id}', '❤️')" class="text-[10px] hover:scale-125 transition-transform">❤️</button>
             </div>
         `;
 
@@ -308,21 +161,45 @@ export const Chat = {
     },
 
     setReply: function(id, name, text) {
-        State.replyingTo = { id, name, text: text.substring(0, 60) };
+        State.replyingTo = { id, name, text: text.substring(0, 40) + (text.length > 40 ? '...' : '') };
         const el = document.getElementById('reply-preview');
         if(el) {
             el.innerHTML = `
-                <div class="flex items-center justify-between bg-slate-50 dark:bg-white/5 p-3 rounded-xl mb-4 border border-slate-200 dark:border-white/5 animate-fade">
-                    <div class="flex flex-col gap-0.5 pl-2 border-l-2 border-black dark:border-white">
-                        <span class="text-[10px] font-bold text-slate-900 dark:text-white uppercase tracking-widest">Replying to ${name}</span>
-                        <span class="text-xs text-slate-500 dark:text-slate-400 truncate max-w-md">"${text}"</span>
+                <div class="flex items-center justify-between bg-slate-50 dark:bg-white/5 p-3 rounded-xl mb-4 border border-slate-200 dark:border-white/5">
+                    <div class="flex flex-col pl-2 border-l-2 border-black dark:border-white">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Replying to ${name}</span>
+                        <span class="text-xs font-medium truncate max-w-md">"${text}"</span>
                     </div>
-                    <button onclick="State.replyingTo = null; document.getElementById('reply-preview').innerHTML = ''" class="p-2 hover:bg-slate-200 dark:hover:bg-white/10 rounded-lg text-slate-500 transition-colors"><i data-lucide="x" class="w-4 h-4"></i></button>
+                    <button onclick="Chat.clearReply()" class="p-1 hover:bg-slate-200 dark:hover:bg-white/10 rounded-lg"><i data-lucide="x" class="w-4 h-4"></i></button>
                 </div>
             `;
             if(window.lucide) lucide.createIcons();
         }
         document.getElementById('msg-input').focus();
+    },
+
+    clearReply: function() {
+        State.replyingTo = null;
+        const el = document.getElementById('reply-preview');
+        if(el) el.innerHTML = '';
+    },
+
+    onReactionUpdate: function(data) {
+        const msgEl = document.getElementById(data.mid);
+        if(!msgEl) return;
+        
+        const reactionContainer = msgEl.querySelector('.flex.flex-wrap.gap-1.mt-1');
+        if(reactionContainer) {
+            reactionContainer.innerHTML = Object.entries(data.reactions).map(([emoji, uids]) => `
+                <button onclick="API.addReaction('${data.mid}', '${emoji}')" class="px-2 py-0.5 bg-slate-100 dark:bg-white/10 rounded-full text-[10px] font-bold flex items-center gap-1 hover:bg-slate-200 dark:hover:bg-white/20 transition-colors">
+                    <span>${emoji}</span>
+                    <span class="text-slate-500">${uids.length}</span>
+                </button>
+            `).join('');
+        } else {
+            // If container doesn't exist, we might need a more robust re-render or just ignore for now
+            // since renderMsg creates it if there are reactions.
+        }
     },
 
     showPopover: function(e, uid, name, avatar) {
@@ -333,11 +210,9 @@ export const Chat = {
         const av = document.getElementById('popover-avatar');
         n.innerText = name;
         av.src = avatar;
-        
         pop.style.left = `${Math.min(e.pageX, window.innerWidth - 300)}px`;
         pop.style.top = `${Math.min(e.pageY, window.innerHeight - 400)}px`;
         pop.classList.remove('hidden');
-        
         const close = () => { pop.classList.add('hidden'); document.removeEventListener('click', close); };
         setTimeout(() => document.addEventListener('click', close), 10);
     },
@@ -364,21 +239,6 @@ export const Chat = {
     scrollToBottom: function(force = false) {
         const feed = document.getElementById('messages-feed');
         if(feed && (this.autoScroll || force)) feed.scrollTop = feed.scrollHeight;
-    },
-    handleUpload: async function(input) {
-        if(input.files && input.files[0]) {
-            try {
-                const res = await API.uploadFile(input.files[0]);
-                if(res && res.url) API.sendMessage(State.activeChannel, `![${res.filename}](${res.url})`);
-            } catch(e) { alert("Upload Failed"); }
-            finally { input.value = ''; }
-        }
-    },
-    toggleSearch: function() {
-        const query = prompt("Search Workspace:");
-        if(query) {
-            document.querySelectorAll('.msg-item').forEach(m => m.classList.toggle('hidden', !m.innerText.toLowerCase().includes(query.toLowerCase())));
-        } else document.querySelectorAll('.msg-item').forEach(m => m.classList.remove('hidden'));
     }
 };
 

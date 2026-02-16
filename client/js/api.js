@@ -37,6 +37,10 @@ export const API = {
             if(window.Chat) window.Chat.onTypingUpdate(data);
         });
 
+        this.socket.on('reaction_update', (data) => {
+            if(window.Chat) window.Chat.onReactionUpdate(data);
+        });
+
         this.socket.on('user_list_update', () => {
             if(window.UI) window.UI.renderUsers();
         });
@@ -97,6 +101,12 @@ export const API = {
         } else {
             console.error("[API] Socket inactive");
             this.init();
+        }
+    },
+
+    addReaction: function(mid, emoji) {
+        if(this.socket && this.socket.connected) {
+            this.socket.emit('add_reaction', { mid, emoji, uid: State.user.uid });
         }
     },
 

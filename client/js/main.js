@@ -109,7 +109,11 @@ export const App = {
     },
 
     setTheme: function(theme) {
+        // Ensure Lucide icons are refreshed after theme change
         updateSettings({ theme });
+        setTimeout(() => {
+            if(window.lucide) lucide.createIcons();
+        }, 50);
     }
 };
 

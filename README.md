@@ -73,4 +73,10 @@ The service will be accessible at `http://localhost:3000`.
 
 This project is licensed under the MIT License. Contributions and forks are encouraged.
 
+---
+
+## Release History
+
+Detailed changes for each release are documented in the [CHANGELOG.md](CHANGELOG.md).
+
 **Lead Architect:** [ItsSkellyHer3](https://github.com/ItsSkellyHer3)

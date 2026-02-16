@@ -45,13 +45,16 @@ export const updateSettings = (newSettings) => {
     if(theme === 'pearl') {
         root.setAttribute('data-theme', 'light');
         root.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
     } else {
         root.removeAttribute('data-theme');
         root.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
     }
 
     // Body classes (ensure body exists)
     if(body) {
+        body.classList.toggle('dark', theme !== 'pearl');
         body.classList.toggle('stealth-mode', !!State.settings.stealthMode);
         
         // Font Scaling

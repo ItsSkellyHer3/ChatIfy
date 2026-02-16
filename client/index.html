@@ -97,11 +97,11 @@
                         <!-- Theme Selection -->
                         <div class="w-full space-y-2">
                             <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Theme</label>
-                            <div class="flex gap-2">
-                                <button onclick="App.setTheme('pearl')" class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-all text-sm font-semibold">
+                            <div class="flex gap-2" id="theme-selector">
+                                <button onclick="App.setTheme('pearl'); document.querySelectorAll('#theme-selector button').forEach(b => b.classList.remove('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black')); this.classList.add('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black')" class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-all text-sm font-semibold">
                                     <i data-lucide="sun" class="w-4 h-4"></i> Light
                                 </button>
-                                <button onclick="App.setTheme('onyx')" class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-all text-sm font-semibold">
+                                <button onclick="App.setTheme('onyx'); document.querySelectorAll('#theme-selector button').forEach(b => b.classList.remove('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black')); this.classList.add('bg-black', 'text-white', 'dark:bg-white', 'dark:text-black')" class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-white/10 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5 transition-all text-sm font-semibold">
                                     <i data-lucide="moon" class="w-4 h-4"></i> Dark
                                 </button>
                             </div>
