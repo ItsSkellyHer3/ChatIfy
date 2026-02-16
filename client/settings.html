@@ -3,84 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Settings</title>
+    <title>Chatify | Settings</title>
+    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/style.css?v=13.0.6">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        dark: '#000000',
-                        surface: '#0a0a0a',
+                        black: '#000000',
+                        white: '#ffffff',
+                        zinc: {
+                            50: '#fafafa',
+                            100: '#f4f4f5',
+                            200: '#e4e4e7',
+                            800: '#27272a',
+                            900: '#18181b',
+                            950: '#09090b'
+                        }
                     }
                 }
             }
         }
     </script>
+    
+    <style>
+        body { background-color: #ffffff; color: #000000; overflow: hidden; font-family: 'Inter', sans-serif; }
+        .dark body { background-color: #000000; color: #ffffff; }
+
+        .scroller::-webkit-scrollbar { width: 3px; }
+        .scroller::-webkit-scrollbar-track { background: transparent; }
+        .scroller::-webkit-scrollbar-thumb { background: #000; border-radius: 10px; }
+        .dark .scroller::-webkit-scrollbar-thumb { background: #fff; }
+
+        .border-thin { border-width: 0.5px; }
+    </style>
 </head>
-<body class="h-screen w-full flex overflow-hidden bg-white dark:bg-dark text-slate-900 dark:text-white transition-colors duration-300">
+<body class="transition-colors duration-500">
 
-    <aside class="w-64 h-full flex flex-col bg-slate-50 dark:bg-surface border-r border-slate-200 dark:border-white/5 z-30 hidden md:flex">
-        <div class="p-6 flex flex-col h-full">
-            <div class="flex items-center gap-3 mb-8 px-2 cursor-pointer group" onclick="window.location.href='/chat.html'">
-                <button class="w-8 h-8 bg-white dark:bg-white/10 rounded-lg flex items-center justify-center border border-slate-200 dark:border-white/5 shadow-sm group-hover:bg-slate-100 dark:group-hover:bg-white/20 transition-all">
-                    <i data-lucide="chevron-left" class="w-4 h-4 text-slate-600 dark:text-slate-300"></i>
-                </button>
-                <span class="font-bold text-lg tracking-tight">Settings</span>
-            </div>
-
-            <nav class="flex-1 space-y-1">
-                <div class="px-3 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Account</div>
-                <button onclick="Settings.render('profile')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors" id="nav-profile">
-                    <i data-lucide="user" class="w-4 h-4"></i> Profile
-                </button>
-                <button onclick="Settings.render('privacy')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors" id="nav-privacy">
-                    <i data-lucide="settings-2" class="w-4 h-4"></i> Preferences
-                </button>
-                
-                <div class="px-3 mt-6 mb-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">App</div>
-                <button onclick="Settings.render('theme')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors" id="nav-theme">
-                    <i data-lucide="palette" class="w-4 h-4"></i> Appearance
-                </button>
-                <button onclick="Settings.render('backup')" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors" id="nav-backup">
-                    <i data-lucide="database" class="w-4 h-4"></i> Data Control
-                </button>
-            </nav>
-
-            <div class="mt-auto pt-6 border-t border-slate-200 dark:border-white/5 space-y-4">
-                <a href="https://github.com/ItsSkellyHer3" target="_blank" class="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-200 dark:hover:bg-white/5 transition-colors group">
-                    <img src="https://avatars.githubusercontent.com/ItsSkellyHer3" class="w-8 h-8 rounded-lg grayscale group-hover:grayscale-0 transition-all border border-slate-200 dark:border-white/10" alt="ItsSkellyHer3">
-                    <div class="flex flex-col">
-                        <span class="text-xs font-bold text-slate-900 dark:text-white">ItsSkellyHer3</span>
-                        <span class="text-[9px] text-slate-500 uppercase font-bold tracking-tighter">Developer</span>
+    <div id="app-shell" class="h-screen w-screen flex overflow-hidden">
+        
+        <!-- SIDE NAVIGATION (Left) -->
+        <aside class="w-20 xl:w-80 h-full flex flex-col shrink-0 border-r border-zinc-100 dark:border-zinc-900 bg-white dark:bg-black z-30 transition-all duration-500">
+            <div class="h-20 flex items-center px-6 border-b border-zinc-50 dark:border-zinc-950">
+                <div class="flex items-center gap-4 cursor-pointer group" onclick="window.location.href='/chat.html'">
+                    <div class="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center transition-all group-hover:scale-90">
+                        <i data-lucide="chevron-left" class="w-4 h-4 text-white dark:text-black"></i>
                     </div>
-                </a>
-                <button onclick="Auth.logout()" class="w-full py-2.5 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-500 text-sm font-bold hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors flex items-center justify-center gap-2">
-                    <i data-lucide="log-out" class="w-4 h-4"></i> Logout
+                    <span class="hidden xl:block font-black text-xl tracking-tighter uppercase leading-none">Settings</span>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto scroller p-4 space-y-8">
+                <div class="space-y-1">
+                    <div class="hidden xl:block px-4 text-[10px] font-black text-zinc-300 dark:text-zinc-700 uppercase tracking-[0.2em] mb-2">Category</div>
+                    <button onclick="Settings.render('profile')" id="nav-profile" class="nav-item w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                        <i data-lucide="user" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                        <span class="hidden xl:block text-sm font-bold">Profile</span>
+                    </button>
+                    <button onclick="Settings.render('privacy')" id="nav-privacy" class="nav-item w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                        <i data-lucide="shield" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                        <span class="hidden xl:block text-sm font-bold">Privacy</span>
+                    </button>
+                    <button onclick="Settings.render('theme')" id="nav-theme" class="nav-item w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                        <i data-lucide="palette" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                        <span class="hidden xl:block text-sm font-bold">Appearance</span>
+                    </button>
+                    <button onclick="Settings.render('backup')" id="nav-backup" class="nav-item w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                        <i data-lucide="database" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                        <span class="hidden xl:block text-sm font-bold">Maintenance</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-6 border-t border-zinc-50 dark:border-zinc-950">
+                <button onclick="Auth.logout()" class="w-full py-4 bg-zinc-50 dark:bg-zinc-900 text-red-500 rounded-2xl text-xs font-black uppercase tracking-[0.2em] transition-all hover:bg-red-500 hover:text-white active:scale-95">
+                    Terminate Link
                 </button>
             </div>
-        </div>
-    </aside>
+        </aside>
 
-    <main class="flex-1 bg-white dark:bg-dark overflow-y-auto scroller z-10 relative">
-        <div class="md:hidden flex items-center gap-4 p-4 border-b border-slate-100 dark:border-white/5 bg-white/80 dark:bg-dark/80 backdrop-blur-xl sticky top-0 z-20">
-            <button onclick="window.location.href='/chat.html'" class="p-2 -ml-2 text-slate-600 dark:text-slate-300">
-                <i data-lucide="chevron-left" class="w-6 h-6"></i>
-            </button>
-            <span class="font-bold text-lg">Settings</span>
-        </div>
-
-        <div class="max-w-4xl mx-auto p-6 md:p-12" id="settings-content-root">
-            <div class="flex flex-col items-center justify-center h-[50vh] space-y-4 opacity-50">
-                <div class="w-6 h-6 border-2 border-slate-200 border-t-black dark:border-t-white rounded-full animate-spin"></div>
-                <span class="text-xs font-bold uppercase tracking-widest">Loading...</span>
+        <!-- MAIN CONTENT (Right) -->
+        <main class="flex-1 h-full bg-white dark:bg-black overflow-y-auto scroller">
+            <div class="max-w-4xl mx-auto px-8 py-20 lg:px-20" id="settings-content-root">
+                <!-- Data Injection -->
             </div>
-        </div>
-    </main>
+        </main>
 
-    <script type="module" src="js/main.js?v=13.0.6"></script>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
