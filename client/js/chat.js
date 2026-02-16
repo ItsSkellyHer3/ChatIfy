@@ -109,33 +109,33 @@ export const Chat = {
         feed.innerHTML = `
             <div class="max-w-3xl mx-auto space-y-12 py-16 animate-fade px-4">
                 <div class="space-y-6 text-center">
-                    <div class="w-20 h-20 bg-black dark:bg-white rounded-3xl flex items-center justify-center mx-auto shadow-xl">
-                        <i data-lucide="message-square" class="w-10 h-10 text-white dark:text-black"></i>
+                    <div class="w-20 h-20 bg-white rounded-3xl flex items-center justify-center mx-auto shadow-2xl">
+                        <i data-lucide="message-square" class="w-10 h-10 text-black"></i>
                     </div>
-                    <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight">Open Source Communication</h1>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto leading-relaxed">Welcome to Chatify, an open-source messaging platform. Built for the community, by the community.</p>
+                    <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight uppercase">Architecting Privacy.</h1>
+                    <p class="text-lg text-zinc-500 max-w-xl mx-auto leading-relaxed">Welcome to Chatify, a monochrome workspace designed for secure, ephemeral communication. Developed by ItsSkellyHer3 for the community.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div class="p-8 bg-white dark:bg-white/5 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-500/20 rounded-2xl flex items-center justify-center mb-6">
-                            <i data-lucide="github" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                    <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 shadow-sm hover:bg-white/10 transition-all">
+                        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="shield" class="w-6 h-6 text-black"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">MIT Licensed</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">The entire source code is available on GitHub. You are free to inspect, fork, and host your own instance.</p>
+                        <h3 class="text-xl font-bold text-white mb-3">Pure Anonymity</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed">No tracking, no logs, and no historical persistence. Your data exists only in volatile memory and is purged every 60 minutes.</p>
                     </div>
-                    <div class="p-8 bg-white dark:bg-white/5 rounded-3xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-500/20 rounded-2xl flex items-center justify-center mb-6">
-                            <i data-lucide="shield" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+                    <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 shadow-sm hover:bg-white/10 transition-all">
+                        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6">
+                            <i data-lucide="code" class="w-6 h-6 text-black"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Privacy First</h3>
-                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">No tracking, no cookies, and no data collection. Just ephemeral messaging for your security.</p>
+                        <h3 class="text-xl font-bold text-white mb-3">Open Architecture</h3>
+                        <p class="text-zinc-500 text-sm leading-relaxed">MIT Licensed and community-driven. Chatify is fully open-source, allowing you to inspect, fork, and self-host with total transparency.</p>
                     </div>
                 </div>
 
                 <div class="flex justify-center pt-8">
-                    <button onclick="API.downloadSource()" class="px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black rounded-xl font-bold hover:scale-105 transition-transform shadow-lg flex items-center gap-2">
-                        <i data-lucide="download" class="w-4 h-4"></i> Download Source
+                    <button onclick="API.downloadSource()" class="px-10 py-4 bg-white text-black rounded-xl font-black uppercase text-xs tracking-widest hover:scale-105 transition-all shadow-xl">
+                        Get Source Code
                     </button>
                 </div>
             </div>
