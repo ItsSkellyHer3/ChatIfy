@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chatify | Redirecting</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fafafa; color: #000000; margin: 0; }
+        .heading { font-family: 'Space Grotesk'; letter-spacing: -0.04em; }
+        .timer-ring { transition: stroke-dashoffset 1s linear; }
+        
+        .fade-reveal { animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6 md:p-12">
+
+    <!-- Background Decoration -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden opacity-[0.03] flex items-center justify-center">
+        <svg width="800" height="800" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"/></svg>
+    </div>
+
+    <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center fade-reveal">
+        
+        <!-- Left: Information -->
+        <div class="space-y-12">
+            <header class="space-y-8">
+                <div class="flex items-center gap-6">
+                    <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center shadow-xl">
+                        <i data-lucide="message-square" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 bg-gray-100 rounded-full text-gray-400">
+                        <i data-lucide="cat" class="w-3.5 h-3.5"></i>
+                        <span class="text-[9px] font-bold uppercase tracking-widest">Verified Identity</span>
+                    </div>
+                </div>
+                <h1 class="heading text-6xl md:text-8xl font-black uppercase leading-[0.9]">Redirecting To Session</h1>
+                <p class="text-gray-400 text-lg md:text-xl font-medium max-w-md leading-relaxed">Please wait while we establish a secure connection to your private chat environment.</p>
+            </header>
+
+            <div class="bg-white rounded-[2.5rem] p-8 md:p-10 border border-gray-100 shadow-sm space-y-6">
+                <div class="flex items-center gap-4 text-amber-600">
+                    <i data-lucide="info" class="w-5 h-5"></i>
+                    <span class="text-xs font-bold uppercase tracking-widest">Connectivity Notice</span>
+                </div>
+                <p class="text-gray-500 text-sm md:text-base leading-relaxed">
+                    We use <strong>secure relay</strong> for traffic management. When the next page loads, click the <span class="text-black font-bold underline underline-offset-4">"Visit Site"</span> button to enter your session.
+                </p>
+            </div>
+        </div>
+
+        <!-- Right: Actions & Timer -->
+        <div class="bg-white rounded-[3.5rem] p-12 md:p-20 shadow-[0_50px_100px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col items-center text-center space-y-12">
+            
+            <div class="relative w-48 h-48 flex items-center justify-center">
+                <svg class="absolute inset-0 w-full h-full -rotate-90 scale-110">
+                    <circle cx="96" cy="96" r="88" stroke="#f3f4f6" stroke-width="6" fill="transparent" />
+                    <circle id="progress-circle" cx="96" cy="96" r="88" stroke="black" stroke-width="6" fill="transparent" stroke-dasharray="552.92" stroke-dashoffset="0" class="timer-ring" />
+                </svg>
+                <div class="space-y-1">
+                    <span id="countdown" class="text-black text-7xl font-black font-mono block">10</span>
+                    <span class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.3em]">Seconds</span>
+                </div>
+            </div>
+
+            <div class="w-full space-y-4">
+                <button id="gate-btn" onclick="redirectToGateway()" class="w-full py-7 bg-black text-white rounded-[2rem] font-bold text-sm tracking-[0.3em] hover:bg-gray-800 transition-all uppercase shadow-2xl active:scale-95">
+                    Enter Now
+                </button>
+                <button id="pause-btn" onclick="togglePause()" class="w-full py-4 text-gray-400 font-bold text-[10px] tracking-[0.2em] hover:text-black transition-all uppercase">
+                    Pause Sync
+                </button>
+            </div>
+
+            <div class="flex gap-8 opacity-20">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shield" class="w-4 h-4"></i>
+                    <span class="text-[9px] font-bold uppercase tracking-widest">Secure</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <i data-lucide="zap" class="w-4 h-4"></i>
+                    <span class="text-[9px] font-bold uppercase tracking-widest">Fast</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer class="mt-auto pt-12">
+        <p class="text-[10px] font-bold text-gray-300 uppercase tracking-[0.4em]">Chatify v12.4.0</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        const GATEWAY_URL = "https://your-tunnel-url.ngrok-free.dev";
+        let count = 10;
+        let isPaused = false;
+        const countdownEl = document.getElementById('countdown');
+        const progressCircle = document.getElementById('progress-circle');
+        const btn = document.getElementById('gate-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        
+        const totalDash = 552.92;
+
+        const timer = setInterval(() => {
+            if(isPaused) return;
+            
+            count--;
+            countdownEl.innerText = Math.max(0, count);
+            
+            const offset = totalDash - (Math.max(0, count) / 10) * totalDash;
+            progressCircle.style.strokeDashoffset = offset;
+
+            if(count <= 0) {
+                clearInterval(timer);
+                redirectToGateway();
+            }
+        }, 1000);
+
+        function togglePause() {
+            isPaused = !isPaused;
+            pauseBtn.innerText = isPaused ? 'Resume Handshake' : 'Pause Handshake';
+            pauseBtn.classList.toggle('text-black', isPaused);
+        }
+
+        function redirectToGateway() {
+            btn.innerHTML = 'Connecting...';
+            btn.disabled = true;
+            setTimeout(() => {
+                window.location.href = GATEWAY_URL;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
