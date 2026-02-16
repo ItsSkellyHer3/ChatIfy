@@ -62,9 +62,10 @@
             margin: 0 auto;
         }
 
-        @media (max-width: 1536px) { .app-grid { grid-template-columns: 260px 1fr 0px; gap: 1rem; padding: 1rem; } }
+        @media (max-width: 1440px) { .app-grid { grid-template-columns: 240px 1fr 300px; gap: 1rem; padding: 1rem; } }
+        @media (max-width: 1280px) { .app-grid { grid-template-columns: 80px 1fr 280px; } }
         @media (max-width: 1024px) { .app-grid { grid-template-columns: 80px 1fr 0px; } }
-        @media (max-width: 768px) { .app-grid { grid-template-columns: 0px 1fr 0px; padding: 0; gap: 0; } }
+        @media (max-width: 768px) { .app-grid { display: block; padding: 0; } }
 
         .card-surface {
             background: rgba(255, 255, 255, 0.8);
