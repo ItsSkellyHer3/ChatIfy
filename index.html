@@ -1288,6 +1288,10 @@
         /* --- MODULE: BOOTSTRAP --- */
         const Boot = {
             run: function() {
+                // Redirect to landing if not coming from a login attempt
+                if(!localStorage.getItem('af_session') && !window.location.hash.includes('login')) {
+                    // window.location.href = 'landing.html'; 
+                }
                 try {
                     console.log("%c AUTHFLOW DESKTOP %c v24.0.0 ", "background:#5865F2; color:white; font-weight:bold; padding:4px;", "background:#333; color:white; padding:4px;");
                     if(!firebase.apps.length) {
