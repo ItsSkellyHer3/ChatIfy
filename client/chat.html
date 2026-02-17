@@ -140,7 +140,7 @@
         <main class="card-surface flex flex-col h-full overflow-hidden shadow-soft relative">
             <header class="h-20 px-8 flex items-center justify-between border-b border-black/5 dark:border-white/5 bg-white/50 dark:bg-black/50 backdrop-blur-md shrink-0">
                 <div class="flex items-center gap-4">
-                    <button class="xl:hidden p-2 text-zinc-500" onclick="UI.toggleNav()">
+                    <button class="xl:hidden p-2 text-zinc-500" onclick="UI.toggleNav()" aria-label="Open navigation menu">
                         <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                     <div>
@@ -150,11 +150,11 @@
                 </div>
                 
                 <div class="flex items-center gap-2">
-                    <button onclick="App.toggleTheme()" class="p-3 hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl text-zinc-400 transition-all">
+                    <button onclick="App.toggleTheme()" class="p-3 hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl text-zinc-400 transition-all" aria-label="Toggle dark mode">
                         <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
                         <i data-lucide="moon" class="w-5 h-5 dark:hidden"></i>
                     </button>
-                    <button onclick="UI.toggleContext()" class="xl:hidden p-3 hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl text-zinc-400">
+                    <button onclick="UI.toggleContext()" class="xl:hidden p-3 hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl text-zinc-400" aria-label="Toggle details panel">
                         <i data-lucide="panel-right" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -167,12 +167,12 @@
             <div class="p-6 pt-2">
                 <div id="reply-preview" class="hidden"></div>
                 <div class="max-w-4xl mx-auto bg-white dark:bg-zinc-950 border border-black/5 dark:border-white/10 rounded-[2rem] p-2 flex items-end shadow-xl">
-                    <button class="p-4 text-zinc-400 hover:text-black dark:hover:text-white transition-colors" onclick="document.getElementById('file-upload').click()">
+                    <button class="p-4 text-zinc-400 hover:text-black dark:hover:text-white transition-colors" onclick="document.getElementById('file-upload').click()" aria-label="Attach file">
                         <i data-lucide="plus" class="w-6 h-6"></i>
                     </button>
                     <input type="file" id="file-upload" class="hidden">
-                    <textarea id="msg-input" rows="1" placeholder="Type message..." class="flex-1 bg-transparent border-none outline-none text-sm py-4 px-2 max-h-32 resize-none text-black dark:text-white placeholder:text-zinc-500"></textarea>
-                    <button onclick="Chat.send()" class="p-3 bg-black dark:bg-white rounded-full text-white dark:text-black hover:scale-105 active:scale-95 transition-all shadow-lg m-1">
+                    <textarea id="msg-input" rows="1" placeholder="Type message..." class="flex-1 bg-transparent border-none outline-none text-sm py-4 px-2 max-h-32 resize-none text-black dark:text-white placeholder:text-zinc-500" aria-label="Message input"></textarea>
+                    <button onclick="Chat.send()" class="p-3 bg-black dark:bg-white rounded-full text-white dark:text-black hover:scale-105 active:scale-95 transition-all shadow-lg m-1" aria-label="Send message">
                         <i data-lucide="arrow-up" class="w-6 h-6"></i>
                     </button>
                 </div>

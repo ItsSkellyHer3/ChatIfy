@@ -225,10 +225,10 @@ export const Chat = {
 
                     <!-- Modern Action Dock (Inside Layout) -->
                     <div class="flex gap-1 items-center px-2 py-1 rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md shadow-xl border border-black/5 dark:border-white/5 opacity-0 group-hover/inner:opacity-100 transition-all duration-200 absolute top-0 ${isOwn ? 'right-full mr-2' : 'left-full ml-2'} z-30">
-                        <button onclick="Chat.initReply('${m.id}', '${m.name}', '${this.escapeHtml(m.text)}')" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500 hover:text-black dark:hover:text-white">
+                        <button onclick="Chat.initReply('${m.id}', '${m.name}', '${this.escapeHtml(m.text)}')" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500 hover:text-black dark:hover:text-white" aria-label="Reply to message">
                             <i data-lucide="reply" class="w-3.5 h-3.5"></i>
                         </button>
-                        <button onclick="API.addReaction('${m.id}', '❤️')" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500 hover:text-red-500">
+                        <button onclick="API.addReaction('${m.id}', '❤️')" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500 hover:text-red-500" aria-label="React with heart">
                             <i data-lucide="heart" class="w-3.5 h-3.5"></i>
                         </button>
                     </div>
@@ -326,7 +326,7 @@ export const Chat = {
     renderReactions: function(reactions, mid) {
         if (!reactions || Object.keys(reactions).length === 0) return '';
         return Object.entries(reactions).map(([emoji, uids]) => `
-            <button onclick="API.addReaction('${mid}', '${emoji}')" class="px-2 py-0.5 bg-white dark:bg-white/10 border border-black/5 dark:border-white/5 rounded-full text-[10px] font-bold shadow-sm hover:scale-110 transition-transform">
+            <button onclick="API.addReaction('${mid}', '${emoji}')" class="px-2 py-0.5 bg-white dark:bg-white/10 border border-black/5 dark:border-white/5 rounded-full text-[10px] font-bold shadow-sm hover:scale-110 transition-transform" aria-label="${uids.length} reactions with ${emoji}">
                 ${emoji} <span class="text-gray-500 ml-0.5">${uids.length}</span>
             </button>
         `).join('');
