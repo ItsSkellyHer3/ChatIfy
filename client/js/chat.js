@@ -80,40 +80,38 @@ export const Chat = {
         if(!feed) return;
         
         feed.innerHTML = `
-            <div class="max-w-3xl mx-auto w-full h-full flex flex-col items-center justify-center p-8 animate-fade-in">
-                <div class="w-20 h-20 bg-black dark:bg-white rounded-[2rem] shadow-soft flex items-center justify-center mb-8">
-                    <i data-lucide="zap" class="w-8 h-8 text-white dark:text-black"></i>
+            <div class="max-w-2xl mx-auto w-full h-full flex flex-col items-center justify-center p-8">
+                <div class="w-16 h-16 bg-black dark:bg-white rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="zap" class="w-6 h-6 text-white dark:text-black"></i>
                 </div>
                 
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 text-center tracking-tight uppercase italic">
-                    Infrastructure Ready.
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4 text-center tracking-tight">
+                    Welcome to Chatify
                 </h1>
                 
-                <p class="text-gray-500 text-center max-w-lg mb-12 text-lg font-medium leading-relaxed">
-                    Ephemeral messaging is operational. Select a channel to begin.
+                <p class="text-gray-500 text-center max-w-md mb-10 text-md font-medium">
+                    Select a channel from the sidebar to start messaging.
                 </p>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                    <button onclick="document.querySelector('#channel-list > div')?.click()" class="group p-6 text-left bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-[2rem] hover:shadow-soft transition-all hover:-translate-y-1">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-black dark:bg-white flex items-center justify-center text-white dark:text-black">
-                                <i data-lucide="message-circle" class="w-6 h-6"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+                    <button onclick="document.querySelector('#channel-list > div')?.click()" class="group p-5 text-left bg-zinc-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-black dark:bg-white flex items-center justify-center text-white dark:text-black">
+                                <i data-lucide="message-circle" class="w-5 h-5"></i>
                             </div>
-                            <i data-lucide="arrow-right" class="w-5 h-5 text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-1 uppercase tracking-tight italic">Channels</h3>
-                        <p class="text-sm text-gray-500">Access primary threads.</p>
+                        <h3 class="font-bold text-md text-gray-900 dark:text-white mb-0.5">Channels</h3>
+                        <p class="text-xs text-gray-500">Browse available rooms.</p>
                     </button>
 
-                    <button onclick="window.location.href='/settings.html'" class="group p-6 text-left bg-white dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-[2rem] hover:shadow-soft transition-all hover:-translate-y-1">
-                        <div class="flex items-center justify-between mb-4">
-                            <div class="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-white/10 flex items-center justify-center text-zinc-500 dark:text-white">
-                                <i data-lucide="user" class="w-6 h-6"></i>
+                    <button onclick="window.location.href='/settings.html'" class="group p-5 text-left bg-zinc-50 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition-all">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-10 h-10 rounded-lg bg-zinc-200 dark:bg-white/10 flex items-center justify-center text-zinc-600 dark:text-white">
+                                <i data-lucide="user" class="w-5 h-5"></i>
                             </div>
-                            <i data-lucide="arrow-right" class="w-5 h-5 text-gray-300 group-hover:text-black dark:group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-lg text-gray-900 dark:text-white mb-1 uppercase tracking-tight italic">Identity</h3>
-                        <p class="text-sm text-gray-500">Configure credentials.</p>
+                        <h3 class="font-bold text-md text-gray-900 dark:text-white mb-0.5">Settings</h3>
+                        <p class="text-xs text-gray-500">Manage your profile.</p>
                     </button>
                 </div>
             </div>
@@ -124,9 +122,9 @@ export const Chat = {
     renderEmptyState: function() {
         const feed = document.getElementById('messages-feed');
         if(feed) feed.innerHTML = `
-            <div class="flex flex-col items-center justify-center h-full opacity-20 space-y-4">
-                <i data-lucide="layers" class="w-12 h-12"></i>
-                <span class="text-[10px] font-black uppercase tracking-[0.4em]">Buffer Empty</span>
+            <div class="flex flex-col items-center justify-center h-full opacity-30 space-y-3">
+                <i data-lucide="layers" class="w-8 h-8"></i>
+                <span class="text-xs font-bold uppercase tracking-wider">No messages here yet</span>
             </div>
         `;
         if(window.lucide) lucide.createIcons();
@@ -184,51 +182,51 @@ export const Chat = {
         let replyHtml = '';
         if (m.reply_to) {
             replyHtml = `
-                <div class="flex items-center gap-2 mb-1.5 text-[10px] font-bold text-gray-400 dark:text-gray-600 uppercase tracking-tighter ${isOwn ? 'mr-4' : 'ml-12'}">
-                    <i data-lucide="corner-down-right" class="w-3.5 h-3.5"></i>
+                <div class="flex items-center gap-2 mb-1 text-[10px] font-bold text-gray-400 dark:text-gray-500 ${isOwn ? 'mr-2' : 'ml-10'}">
+                    <i data-lucide="corner-down-right" class="w-3 h-3"></i>
                     <span>${m.reply_to.name}</span>
-                    <span class="truncate max-w-[150px] normal-case font-medium opacity-50 italic">"${m.reply_to.text}"</span>
+                    <span class="truncate max-w-[150px] font-normal opacity-60">"${m.reply_to.text}"</span>
                 </div>
             `;
         }
 
         const bubbleClass = isOwn 
-            ? "bg-black text-white dark:bg-white dark:text-black rounded-[1.5rem] rounded-tr-md shadow-lg" 
-            : "bg-gray-100 text-black dark:bg-zinc-900 dark:text-white rounded-[1.5rem] rounded-tl-md";
+            ? "bg-zinc-100 text-black dark:bg-zinc-800 dark:text-white rounded-lg"
+            : "bg-zinc-50 text-black dark:bg-zinc-900 dark:text-white rounded-lg";
 
         const avatarHtml = (!isOwn && !isGrouped) ? `
-            <img src="${m.avatar}" class="w-8 h-8 rounded-xl object-cover mr-3 shadow-sm cursor-pointer hover:opacity-80 transition-opacity" onclick="Chat.showPopover(event, '${m.uid}', '${m.name}', '${m.avatar}')">
-        ` : (!isOwn && isGrouped) ? `<div class="w-8 mr-3"></div>` : '';
+            <img src="${m.avatar}" class="w-8 h-8 rounded-full object-cover mr-2 cursor-pointer hover:opacity-80 transition-opacity" onclick="Chat.showPopover(event, '${m.uid}', '${m.name}', '${m.avatar}')">
+        ` : (!isOwn && isGrouped) ? `<div class="w-8 mr-2"></div>` : '';
 
         const nameHtml = (!isOwn && !isGrouped) ? `
-            <div class="flex items-baseline gap-2 mb-1 ml-1">
-                <span class="text-[11px] font-black text-gray-900 dark:text-white uppercase italic tracking-tight">${m.name}</span>
-                <span class="text-[9px] font-bold text-gray-400 uppercase">${time}</span>
+            <div class="flex items-baseline gap-2 mb-0.5">
+                <span class="text-xs font-bold text-gray-900 dark:text-white">${m.name}</span>
+                <span class="text-[10px] font-medium text-gray-400 uppercase">${time}</span>
             </div>
         ` : '';
 
         msgEl.innerHTML = `
-            <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'} max-w-[85%] lg:max-w-[75%] relative">
+            <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'} max-w-[90%] relative">
                 ${replyHtml}
-                <div class="flex items-end group/inner relative">
+                <div class="flex items-start group/inner relative">
                     ${avatarHtml}
                     <div class="flex flex-col ${isOwn ? 'items-end' : 'items-start'}">
                         ${nameHtml}
-                        <div class="${bubbleClass} px-5 py-3 text-[14px] font-medium leading-relaxed relative overflow-hidden">
+                        <div class="${bubbleClass} px-3 py-2 text-sm font-medium relative">
                             ${this.formatText(m.text)}
-                            ${m.isTemp ? '<span class="absolute bottom-0 left-0 w-full h-[2px] bg-black/10 dark:bg-white/10 animate-pulse"></span>' : ''}
+                            ${m.isTemp ? '<span class="absolute bottom-0 left-0 w-full h-[1px] bg-black/10 dark:bg-white/10 animate-pulse"></span>' : ''}
                         </div>
                         <div id="reactions-${m.id}" class="flex flex-wrap gap-1 mt-1 empty:hidden">
                             ${this.renderReactions(m.reactions, m.id)}
                         </div>
                     </div>
 
-                    <!-- Modern Action Dock (Inside Layout) -->
-                    <div class="flex gap-1 items-center px-2 py-1 rounded-full bg-white/90 dark:bg-zinc-800/90 backdrop-blur-md shadow-xl border border-black/5 dark:border-white/5 opacity-0 group-hover/inner:opacity-100 transition-all duration-200 absolute top-0 ${isOwn ? 'right-full mr-2' : 'left-full ml-2'} z-30">
-                        <button onclick="Chat.initReply('${m.id}', '${m.name}', '${this.escapeHtml(m.text)}')" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500 hover:text-black dark:hover:text-white" aria-label="Reply to message">
+                    <!-- Modern Action Dock -->
+                    <div class="flex gap-0.5 items-center px-1 py-0.5 rounded-md bg-white dark:bg-zinc-800 shadow border border-black/5 dark:border-white/5 opacity-0 group-hover/inner:opacity-100 transition-all absolute -top-4 ${isOwn ? 'right-0' : 'left-8'} z-30">
+                        <button onclick="Chat.initReply('${m.id}', '${m.name}', '${this.escapeHtml(m.text)}')" class="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500" aria-label="Reply to message">
                             <i data-lucide="reply" class="w-3.5 h-3.5"></i>
                         </button>
-                        <button onclick="API.addReaction('${m.id}', '❤️')" class="p-1.5 rounded-full hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500 hover:text-red-500" aria-label="React with heart">
+                        <button onclick="API.addReaction('${m.id}', '❤️')" class="p-1 rounded hover:bg-gray-100 dark:hover:bg-zinc-700 transition-colors text-gray-500" aria-label="React with heart">
                             <i data-lucide="heart" class="w-3.5 h-3.5"></i>
                         </button>
                     </div>
@@ -265,21 +263,21 @@ export const Chat = {
         const preview = document.getElementById('reply-preview');
         if (preview) {
             preview.innerHTML = `
-                <div class="flex items-center justify-between p-4 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xl border border-black/5 dark:border-white/5 rounded-3xl shadow-2xl animate-fade-in relative z-50">
-                    <div class="flex items-center gap-4 overflow-hidden pl-3 border-l-4 border-black dark:border-white">
+                <div class="flex items-center justify-between p-3 bg-zinc-50 dark:bg-zinc-900 border-t border-x border-black/5 dark:border-white/5 rounded-t-lg animate-fade-in relative z-50">
+                    <div class="flex items-center gap-3 overflow-hidden pl-2 border-l-2 border-zinc-400">
                         <div class="flex flex-col min-w-0">
-                            <span class="text-[9px] font-black uppercase tracking-[0.2em] text-gray-400">Capture Context</span>
-                            <span class="text-xs truncate font-bold text-gray-600 dark:text-gray-300">"${text}"</span>
+                            <span class="text-[10px] font-bold text-zinc-500 uppercase">Replying to ${name}</span>
+                            <span class="text-xs truncate text-zinc-600 dark:text-zinc-300">"${text}"</span>
                         </div>
                     </div>
-                    <button onclick="Chat.clearReply()" class="p-2 bg-gray-100 dark:bg-zinc-800 rounded-full hover:rotate-90 transition-transform">
-                        <i data-lucide="x" class="w-4 h-4"></i>
+                    <button onclick="Chat.clearReply()" class="p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-all">
+                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
                     </button>
                 </div>
             `;
             if(window.lucide) lucide.createIcons();
             preview.classList.remove('hidden');
-            gsap.fromTo(preview, { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "back.out(1.7)" });
+            gsap.fromTo(preview, { y: 5, opacity: 0 }, { y: 0, opacity: 1, duration: 0.2 });
         }
         document.getElementById('msg-input')?.focus();
     },
