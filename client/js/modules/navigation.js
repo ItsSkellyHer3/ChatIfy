@@ -22,7 +22,8 @@ export const Navigation = {
             channels.forEach((c) => {
                 const isActive = State.activeChannel === c.id;
                 const div = document.createElement('div');
-                div.className = `flex items-center justify-between p-3 rounded-2xl cursor-pointer transition-all duration-300 group ${isActive ? 'bg-white dark:bg-white/10 shadow-soft scale-[1.02]' : 'hover:bg-white/50 dark:hover:bg-white/5'}`;
+                div.className = `flex items-center justify-between p-3 rounded-2xl cursor-pointer transition-all duration-300 group ${isActive ? 'bg-white dark:bg-white/10 shadow-soft scale-[1.02] nav-item-active' : 'hover:bg-white/50 dark:hover:bg-white/5'}`;
+                if (isActive) div.setAttribute('aria-current', 'page');
                 
                 div.onclick = () => Chat.load(c.id, c.name);
                 
@@ -43,22 +44,27 @@ export const Navigation = {
 
     renderUsers: async function() {
         const uList = document.getElementById('user-list');
-        const countEl = document.getElementById('online-count');
+        const mList = document.getElementById('member-list-sidebar');
+        const countEl = document.getElementById('online-count-total');
         if(!uList || !State.user) return;
 
         try {
             const users = await API.getUsers();
             uList.innerHTML = '';
-            const otherUsers = users.filter(u => (u.uid || u.id) !== State.user.uid);
-            if(countEl) countEl.innerText = otherUsers.length;
+            if(mList) mList.innerHTML = '';
 
+            const otherUsers = users.filter(u => (u.uid || u.id) !== State.user.uid);
+            if(countEl) countEl.innerText = users.length;
+
+            // Render DMs
             otherUsers.forEach((u) => {
                 const uid = u.uid || u.id;
                 const dmId = [State.user.uid, uid].sort().join('_');
                 const isActive = State.activeChannel === dmId;
                 
                 const div = document.createElement('div');
-                div.className = `flex items-center gap-3 p-2 rounded-2xl cursor-pointer transition-all duration-300 group ${isActive ? 'bg-white dark:bg-white/10 shadow-soft' : 'hover:bg-white/50 dark:hover:bg-white/5'}`;
+                div.className = `flex items-center gap-3 p-2 rounded-2xl cursor-pointer transition-all duration-300 group ${isActive ? 'bg-white dark:bg-white/10 shadow-soft nav-item-active' : 'hover:bg-white/50 dark:hover:bg-white/5'}`;
+                if (isActive) div.setAttribute('aria-current', 'page');
                 
                 div.onclick = () => Chat.load(dmId, u.name);
                 
@@ -73,6 +79,23 @@ export const Navigation = {
                 `;
                 uList.appendChild(div);
             });
+
+            // Render Member List (Right Sidebar)
+            if(mList) {
+                users.forEach(u => {
+                    const div = document.createElement('div');
+                    div.className = "flex items-center gap-2 p-1.5 rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors group";
+                    div.innerHTML = `
+                        <div class="relative">
+                            <img src="${u.avatar}" class="w-6 h-6 rounded-md object-cover bg-zinc-200">
+                            <div class="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-green-500 border border-white dark:border-zinc-900 rounded-full"></div>
+                        </div>
+                        <span class="text-xs font-medium text-zinc-500 group-hover:text-black dark:group-hover:text-white truncate">${u.name}</span>
+                    `;
+                    mList.appendChild(div);
+                });
+            }
+
             if(window.lucide) lucide.createIcons();
         } catch(e) {}
     }

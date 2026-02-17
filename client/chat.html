@@ -15,7 +15,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    
+    <link rel="stylesheet" href="css/style.css?v=13.0.6">
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -83,31 +84,31 @@
     <div class="app-grid">
         
         <!-- COLUMN 1: SERVERS -->
-        <aside class="flex flex-col items-center py-4 gap-4 bg-zinc-100 dark:bg-zinc-950 border-r border-black/5 dark:border-white/5 h-full overflow-hidden shrink-0">
-            <div class="w-12 h-12 bg-black dark:bg-white rounded-[1.2rem] flex items-center justify-center cursor-pointer hover:rounded-2xl transition-all" onclick="window.location.href='/'">
+        <aside class="flex flex-col items-center py-4 gap-4 bg-zinc-100 dark:bg-zinc-950 border-r border-black/5 dark:border-white/5 h-full overflow-hidden shrink-0" role="navigation" aria-label="Servers">
+            <div class="server-icon w-12 h-12 bg-black dark:bg-white rounded-[1.2rem] flex items-center justify-center cursor-pointer shadow-sm" onclick="window.location.href='/'" aria-label="Home" title="Home">
                 <i data-lucide="message-square" class="w-6 h-6 text-white dark:text-black"></i>
             </div>
             <div class="w-8 h-[2px] bg-black/5 dark:bg-white/5 rounded-full mx-auto"></div>
             <div class="flex flex-col gap-3">
-                <div class="w-12 h-12 bg-zinc-200 dark:bg-zinc-900 rounded-[1.5rem] flex items-center justify-center cursor-pointer hover:rounded-2xl hover:bg-black dark:hover:bg-white group transition-all">
+                <div class="server-icon w-12 h-12 bg-zinc-200 dark:bg-zinc-900 rounded-[1.5rem] flex items-center justify-center cursor-pointer hover:bg-black dark:hover:bg-white group" aria-label="Add Server" title="Add Server">
                     <i data-lucide="plus" class="w-6 h-6 text-zinc-500 group-hover:text-white dark:group-hover:text-black"></i>
                 </div>
             </div>
         </aside>
 
         <!-- COLUMN 2: NAV -->
-        <aside id="nav-sidebar" class="bg-zinc-50 dark:bg-zinc-900/50 flex flex-col h-full overflow-hidden border-r border-black/5 dark:border-white/5 shrink-0">
+        <aside id="nav-sidebar" class="bg-zinc-50 dark:bg-zinc-900/50 flex flex-col h-full overflow-hidden border-r border-black/5 dark:border-white/5 shrink-0" role="navigation" aria-label="Channels and Direct Messages">
             <div class="h-14 flex items-center px-4 border-b border-black/5 dark:border-white/5">
                 <span class="font-bold text-sm tracking-tight">Chatify</span>
             </div>
 
             <div class="flex-1 overflow-y-auto scroller p-2 space-y-6">
                 <div class="space-y-0.5">
-                    <div onclick="Chat.load('getting-started')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors text-zinc-500 hover:text-black dark:hover:text-white group">
+                    <div id="nav-overview" onclick="Chat.load('getting-started')" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors text-zinc-500 hover:text-black dark:hover:text-white group">
                         <i data-lucide="layout-grid" class="w-4 h-4"></i>
                         <span class="text-sm font-medium">Overview</span>
                     </div>
-                    <div onclick="window.location.href='/settings.html'" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors text-zinc-500 hover:text-black dark:hover:text-white group">
+                    <div id="nav-settings" onclick="window.location.href='/settings.html'" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer transition-colors text-zinc-500 hover:text-black dark:hover:text-white group">
                         <i data-lucide="sliders" class="w-4 h-4"></i>
                         <span class="text-sm font-medium">Settings</span>
                     </div>
@@ -115,14 +116,14 @@
 
                 <div class="space-y-1">
                     <div class="flex items-center justify-between px-3">
-                        <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-tight">Channels</span>
+                        <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-tight">Text Channels</span>
                     </div>
                     <div id="channel-list" class="space-y-0.5"></div>
                 </div>
 
                 <div class="space-y-1">
                     <div class="flex items-center justify-between px-3">
-                        <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-tight">People</span>
+                        <span class="text-[11px] font-bold text-zinc-400 uppercase tracking-tight">Direct Messages</span>
                     </div>
                     <div id="user-list" class="space-y-0.5"></div>
                 </div>
@@ -140,7 +141,7 @@
         </aside>
 
         <!-- COLUMN 3: CHAT -->
-        <main class="flex flex-col h-full overflow-hidden relative bg-white dark:bg-zinc-950 border-r border-black/5 dark:border-white/5">
+        <main class="flex flex-col h-full overflow-hidden relative bg-white dark:bg-zinc-950 border-r border-black/5 dark:border-white/5" role="main" aria-label="Chat Feed">
             <header class="h-14 px-6 flex items-center justify-between border-b border-black/5 dark:border-white/5 shrink-0">
                 <div class="flex items-center gap-4">
                     <button class="xl:hidden p-2 text-zinc-500" onclick="UI.toggleNav()" aria-label="Open navigation menu">
@@ -183,7 +184,7 @@
         </main>
 
         <!-- COLUMN 4: DETAILS -->
-        <aside id="context-panel" class="hidden xl:flex flex-col bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden h-full shrink-0">
+        <aside id="context-panel" class="hidden xl:flex flex-col bg-zinc-50 dark:bg-zinc-900/50 overflow-hidden h-full shrink-0" role="complementary" aria-label="Room details">
             <div class="p-6 h-full flex flex-col overflow-y-auto scroller space-y-8">
                 <div class="text-center space-y-3">
                     <div class="w-16 h-16 bg-zinc-200 dark:bg-zinc-800 rounded-2xl mx-auto flex items-center justify-center">
@@ -201,15 +202,22 @@
                         <p id="stat-ping" class="text-xs font-bold text-green-500">12ms</p>
                     </div>
                     <div class="p-3 bg-white dark:bg-zinc-900 border border-black/5 dark:border-white/5 rounded text-left">
-                        <span class="text-[9px] font-bold text-zinc-400 uppercase">Active</span>
+                        <span class="text-[9px] font-bold text-zinc-400 uppercase">Members</span>
                         <p id="stat-members" class="text-xs font-bold">0</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <span class="text-[10px] font-bold text-zinc-400 uppercase px-1">Online — <span id="online-count-total">0</span></span>
+                    <div id="member-list-sidebar" class="space-y-1">
+                        <!-- Dynamic Member List -->
                     </div>
                 </div>
 
                 <div class="mt-auto p-4 bg-red-500/5 border border-red-500/10 rounded-lg text-center space-y-1">
                     <div class="flex items-center justify-center gap-2">
                         <i data-lucide="clock" class="w-3 h-3 text-red-500"></i>
-                        <span class="text-[9px] font-bold text-red-500 uppercase tracking-widest">Auto-Purge</span>
+                        <span class="text-[9px] font-bold text-red-500 uppercase tracking-widest">Session Time</span>
                     </div>
                     <p id="app-reset-timer" class="text-xl font-bold text-red-600">60:00</p>
                 </div>

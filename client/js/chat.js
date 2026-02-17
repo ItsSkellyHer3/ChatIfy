@@ -47,6 +47,20 @@ export const Chat = {
         const roomLabels = document.querySelectorAll('#room-name, #context-room-name');
         roomLabels.forEach(el => el.innerText = name);
 
+        if (window.Navigation) window.Navigation.renderLists();
+
+        // Update static nav states
+        const overviewNav = document.getElementById('nav-overview');
+        if (overviewNav) {
+            if (id === 'getting-started') {
+                overviewNav.classList.add('bg-black/5', 'dark:bg-white/5', 'text-black', 'dark:text-white', 'nav-item-active');
+                overviewNav.setAttribute('aria-current', 'page');
+            } else {
+                overviewNav.classList.remove('bg-black/5', 'dark:bg-white/5', 'text-black', 'dark:text-white', 'nav-item-active');
+                overviewNav.removeAttribute('aria-current');
+            }
+        }
+
         if(id === 'getting-started') {
             this.renderOverview();
             return;
@@ -175,7 +189,7 @@ export const Chat = {
 
         const msgEl = document.createElement('div');
         msgEl.id = m.id;
-        msgEl.className = `flex w-full ${isGrouped ? 'mt-1' : 'mt-6'} ${isOwn ? 'justify-end' : 'justify-start'} group relative px-4 md:px-0`;
+        msgEl.className = `flex w-full ${isGrouped ? 'mt-1' : 'mt-6'} ${isOwn ? 'justify-end' : 'justify-start'} group relative px-4 md:px-0 message-hover`;
 
         const time = new Date(m.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 

@@ -19,11 +19,13 @@ export const Settings = {
         document.querySelectorAll('.nav-item').forEach(btn => {
             const isActive = btn.id === `nav-${tab}`;
             if(isActive) {
-                btn.classList.add('bg-zinc-200', 'dark:bg-zinc-800', 'text-black', 'dark:text-white');
+                btn.classList.add('bg-zinc-200', 'dark:bg-zinc-800', 'text-black', 'dark:text-white', 'nav-item-active');
                 btn.classList.remove('hover:bg-zinc-100', 'dark:hover:bg-zinc-900', 'text-zinc-500');
+                btn.setAttribute('aria-current', 'page');
             } else {
-                btn.classList.remove('bg-zinc-200', 'dark:bg-zinc-800', 'text-black', 'dark:text-white');
+                btn.classList.remove('bg-zinc-200', 'dark:bg-zinc-800', 'text-black', 'dark:text-white', 'nav-item-active');
                 btn.classList.add('hover:bg-zinc-100', 'dark:hover:bg-zinc-900', 'text-zinc-500');
+                btn.removeAttribute('aria-current');
             }
         });
 
@@ -38,7 +40,7 @@ export const Settings = {
         if(tab === 'profile') {
             html = `
                 <div class="animate-fade-in">
-                    <h1 class="${h1}">Identity</h1>
+                    <h1 class="${h1}">Profile</h1>
                     <p class="${p}">Update your public profile information.</p>
                     
                     <div class="${card}">
@@ -92,6 +94,14 @@ export const Settings = {
                                 <p class="text-[11px] font-medium text-zinc-400">Minimize visibility of some UI elements.</p>
                             </div>
                             <input type="checkbox" onchange="Settings.saveSetting('stealthMode', this.checked)" ${s.stealthMode ? 'checked' : ''} class="w-5 h-5 accent-black dark:accent-white cursor-pointer">
+                        </div>
+
+                        <div class="${card} flex items-center justify-between py-4 border-red-500/20">
+                            <div class="space-y-0.5">
+                                <h4 class="font-bold text-md text-red-500">Session Timeout</h4>
+                                <p class="text-[11px] font-medium text-zinc-400">Automatically clear session after 60 minutes.</p>
+                            </div>
+                            <div class="text-xs font-bold text-red-500 px-2 py-1 bg-red-500/10 rounded">Enabled</div>
                         </div>
                     </div>
                 </div>

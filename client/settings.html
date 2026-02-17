@@ -53,7 +53,7 @@
     <div id="app-shell" class="h-screen w-screen flex overflow-hidden">
         
         <!-- SIDE NAVIGATION (Left) -->
-        <aside class="w-64 h-full flex flex-col shrink-0 border-r border-black/5 dark:border-white/5 bg-zinc-50 dark:bg-zinc-950">
+        <aside class="w-64 h-full flex flex-col shrink-0 border-r border-black/5 dark:border-white/5 bg-zinc-50 dark:bg-zinc-950" role="navigation" aria-label="Settings categories">
             <div class="h-14 flex items-center px-4 border-b border-black/5 dark:border-white/5">
                 <div class="flex items-center gap-3 cursor-pointer group" onclick="window.location.href='/chat.html'">
                     <div class="w-8 h-8 bg-black dark:bg-white rounded flex items-center justify-center">
@@ -92,7 +92,7 @@
         </aside>
 
         <!-- MAIN CONTENT (Right) -->
-        <main class="flex-1 h-full bg-white dark:bg-black overflow-y-auto scroller">
+        <main class="flex-1 h-full bg-white dark:bg-black overflow-y-auto scroller" role="main" aria-label="Settings content">
             <div class="max-w-4xl mx-auto px-8 py-20 lg:px-20" id="settings-content-root">
                 <!-- Data Injection -->
             </div>
