@@ -51,19 +51,19 @@
 <body class="font-sans min-h-screen flex flex-col transition-colors duration-200">
 
     <!-- Navigation -->
-    <nav class="w-full border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-black">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+    <nav class="w-full border-b border-black/5 dark:border-white/5 bg-white dark:bg-black">
+        <div class="max-w-6xl mx-auto px-6 h-14 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center transition-transform hover:scale-95">
-                    <i data-lucide="message-square" class="w-5 h-5 text-white dark:text-black"></i>
+                <div class="w-8 h-8 bg-black dark:bg-white rounded flex items-center justify-center">
+                    <i data-lucide="message-square" class="w-4 h-4 text-white dark:text-black"></i>
                 </div>
-                <span class="font-bold text-xl tracking-tight">Chatify</span>
+                <span class="font-bold text-lg tracking-tight">Chatify</span>
             </div>
             
             <div class="flex items-center gap-6">
-                <a href="https://github.com/ItsSkellyHer3/ChatIfy" target="_blank" class="flex items-center gap-2 group text-sm font-semibold text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+                <a href="https://github.com/ItsSkellyHer3/ChatIfy" target="_blank" class="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black dark:hover:text-white transition-colors">
                     <i data-lucide="github" class="w-4 h-4"></i>
-                    <span>Repository</span>
+                    <span>Source</span>
                 </a>
             </div>
         </div>
@@ -71,60 +71,60 @@
 
     <!-- Hero / Login Section -->
     <main class="flex-1 flex items-center px-6">
-        <div class="max-w-7xl mx-auto w-full flex flex-col lg:flex-row justify-between items-center gap-16 py-20">
+        <div class="max-w-6xl mx-auto w-full flex flex-col lg:flex-row justify-between items-center gap-12 py-12">
             
             <!-- Left Side: Text -->
-            <div class="lg:w-1/2 space-y-8 text-left">
-                <h1 class="text-7xl md:text-9xl font-black tracking-tighter leading-[0.9]">
-                    Pure <br>
-                    <span class="text-gray-300 dark:text-gray-800">Focus.</span>
+            <div class="lg:w-1/2 space-y-6 text-left">
+                <h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
+                    Simple <br>
+                    Communication.
                 </h1>
-                <p class="text-xl md:text-2xl text-gray-500 font-medium max-w-lg leading-relaxed">
-                    A minimalist communication tool built for clarity. Open source, secure, and ephemeral by design.
+                <p class="text-lg md:text-xl text-gray-500 font-medium max-w-md leading-relaxed">
+                    A clean, modern chat interface designed for focus and ease of use.
                 </p>
-                <div class="flex gap-4 pt-4">
-                    <div class="flex items-center gap-2 px-4 py-2 border border-gray-200 dark:border-gray-800 rounded-full">
-                        <div class="w-2 h-2 bg-black dark:bg-white rounded-full"></div>
-                        <span class="text-xs font-bold uppercase tracking-widest text-gray-500">v13.2.0 Stable</span>
+                <div class="flex gap-4 pt-2">
+                    <div class="flex items-center gap-2 px-3 py-1 bg-zinc-100 dark:bg-zinc-900 rounded-full">
+                        <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider text-gray-500">v13.2.0 Stable</span>
                     </div>
                 </div>
             </div>
 
             <!-- Right Side: Login Card -->
             <div class="lg:w-full max-w-sm">
-                <div class="bg-white dark:bg-black p-8 rounded-3xl border border-gray-200 dark:border-gray-800 shadow-xl space-y-8">
+                <div class="bg-white dark:bg-zinc-950 p-8 rounded-xl border border-black/5 dark:border-white/10 shadow-sm space-y-8">
                     
                     <div class="flex flex-col items-center gap-6">
                         <div class="relative group cursor-pointer" onclick="Auth.randomizeAvatar()">
-                            <img id="landing-avatar" src="https://api.dicebear.com/7.x/micah/svg?seed=Chatify" class="w-24 h-24 rounded-2xl bg-gray-50 dark:bg-gray-900 object-cover border border-gray-200 dark:border-gray-800 shadow-sm transition-transform group-hover:scale-105">
-                            <div class="absolute -bottom-2 -right-2 bg-black dark:bg-white text-white dark:text-black p-2 rounded-xl shadow-lg border border-white dark:border-black">
+                            <img id="landing-avatar" src="https://api.dicebear.com/7.x/micah/svg?seed=Chatify" class="w-20 h-20 rounded-full bg-gray-50 dark:bg-gray-900 object-cover border border-black/5 dark:border-white/5 shadow-sm">
+                            <div class="absolute -bottom-1 -right-1 bg-black dark:bg-white text-white dark:text-black p-1.5 rounded-full shadow-lg">
                                 <i data-lucide="refresh-cw" class="w-3 h-3"></i>
                             </div>
                         </div>
                         
-                        <div class="w-full space-y-2">
-                            <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Identity</label>
-                            <input type="text" id="username-input" placeholder="Display Name" class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 focus:border-black dark:focus:border-white rounded-xl px-4 py-3.5 text-lg font-bold outline-none transition-all placeholder:text-gray-400">
+                        <div class="w-full space-y-1.5">
+                            <label class="text-[11px] font-bold text-gray-400 uppercase tracking-tight ml-1">Username</label>
+                            <input type="text" id="username-input" placeholder="Enter your name" class="w-full bg-zinc-50 dark:bg-zinc-900 border border-black/5 dark:border-white/5 focus:border-black dark:focus:border-white rounded-lg px-4 py-2.5 text-md font-bold outline-none transition-all">
                         </div>
 
                         <!-- Theme Toggle -->
-                        <div class="w-full space-y-2">
-                            <label class="text-xs font-bold text-gray-400 uppercase tracking-widest ml-1">Appearance</label>
+                        <div class="w-full space-y-1.5">
+                            <label class="text-[11px] font-bold text-gray-400 uppercase tracking-tight ml-1">Appearance</label>
                             <div class="flex gap-2" id="theme-selector">
-                                <button onclick="App.setTheme('pearl'); updateThemeUI(this)" class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-900 transition-all text-sm font-bold group">
-                                    <i data-lucide="sun" class="w-4 h-4 text-gray-400 group-hover:text-black dark:group-hover:text-white"></i> 
+                                <button onclick="App.setTheme('pearl'); updateThemeUI(this)" class="flex-1 flex items-center justify-center gap-2 py-2 border border-black/5 dark:border-white/5 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all text-xs font-bold">
+                                    <i data-lucide="sun" class="w-3.5 h-3.5"></i>
                                     <span>Light</span>
                                 </button>
-                                <button onclick="App.setTheme('onyx'); updateThemeUI(this)" class="flex-1 flex items-center justify-center gap-2 py-3 border border-gray-200 dark:border-gray-800 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-900 transition-all text-sm font-bold group">
-                                    <i data-lucide="moon" class="w-4 h-4 text-gray-400 group-hover:text-black dark:group-hover:text-white"></i> 
+                                <button onclick="App.setTheme('onyx'); updateThemeUI(this)" class="flex-1 flex items-center justify-center gap-2 py-2 border border-black/5 dark:border-white/5 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-all text-xs font-bold">
+                                    <i data-lucide="moon" class="w-3.5 h-3.5"></i>
                                     <span>Dark</span>
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <button id="start-btn" onclick="Auth.createSession()" class="w-full h-14 bg-black dark:bg-white text-white dark:text-black rounded-xl font-bold transition-transform active:scale-95 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">
-                        Enter Workspace <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <button id="start-btn" onclick="Auth.createSession()" class="w-full h-12 bg-black dark:bg-white text-white dark:text-black rounded-lg font-bold text-sm hover:opacity-80 transition-all shadow-sm">
+                        Start Chatting
                     </button>
                 </div>
             </div>

@@ -84,14 +84,29 @@ async def cleanup_cycle():
 async def lifespan(app: FastAPI):
     # Startup
     db = SessionLocal()
-    # Clear and re-add default channels to ensure they exist
-    db.query(Channel).delete()
-    db.add_all([
-        Channel(id="general", name="General"), 
-        Channel(id="chill", name="Chill Area"), 
-        Channel(id="dev", name="Development")
-    ])
-    db.commit()
+
+    # Only seed if the database is empty to avoid data loss on every restart
+    if db.query(Channel).count() == 0:
+        db.add_all([
+            Channel(id="general", name="General"),
+            Channel(id="chill", name="Chill Area"),
+            Channel(id="dev", name="Development")
+        ])
+
+        # Seed Real Data for initial UX showcase
+        users = [
+            User(id="alex-1", username="Alex Johnson", avatar="https://api.dicebear.com/7.x/micah/svg?seed=Alex", last_seen=datetime.datetime.now(datetime.UTC)),
+            User(id="jordan-2", username="Jordan Smith", avatar="https://api.dicebear.com/7.x/micah/svg?seed=Jordan", last_seen=datetime.datetime.now(datetime.UTC)),
+            User(id="taylor-3", username="Taylor Reed", avatar="https://api.dicebear.com/7.x/micah/svg?seed=Taylor", last_seen=datetime.datetime.now(datetime.UTC))
+        ]
+        db.add_all(users)
+
+        # Welcome messages
+        db.add(Message(id=str(uuid.uuid4()), channel_id="general", uid="alex-1", name="Alex Johnson", avatar=users[0].avatar, text="Hey everyone! Welcome to the new Chatify interface. I'm Alex from the UX team.", ts=datetime.datetime.now(datetime.UTC)))
+        db.add(Message(id=str(uuid.uuid4()), channel_id="general", uid="jordan-2", name="Jordan Smith", avatar=users[1].avatar, text="Wow, the new 4-column layout is so much cleaner. Great job on the micro-interactions too!", ts=datetime.datetime.now(datetime.UTC)))
+
+        db.commit()
+
     db.close()
     task = asyncio.create_task(cleanup_cycle())
     yield
