@@ -1,0 +1,7 @@
+
+> chatscord-refactored@2.0.0 start
+> node server/server.js
+
+[App] Ready at port 3000
+(node:59178) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)

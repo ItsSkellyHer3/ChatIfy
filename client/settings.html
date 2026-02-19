@@ -49,50 +49,52 @@
     </style>
 </head>
 <body class="transition-colors duration-500">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-black dark:focus:bg-white focus:text-white dark:focus:text-black focus:rounded-md shadow-2xl font-bold text-xs uppercase tracking-widest">Skip to content</a>
 
     <div id="app-shell" class="h-screen w-screen flex overflow-hidden">
         
         <!-- SIDE NAVIGATION (Left) -->
-        <aside class="w-64 h-full flex flex-col shrink-0 border-r border-black/5 dark:border-white/5 bg-zinc-50 dark:bg-zinc-950" role="navigation" aria-label="Settings categories">
-            <div class="h-14 flex items-center px-4 border-b border-black/5 dark:border-white/5">
-                <div class="flex items-center gap-3 cursor-pointer group" onclick="window.location.href='/chat.html'">
-                    <div class="w-8 h-8 bg-black dark:bg-white rounded flex items-center justify-center">
+        <aside class="w-20 xl:w-80 h-full flex flex-col shrink-0 border-r border-zinc-100 dark:border-zinc-900 bg-white dark:bg-black z-30 transition-all duration-500" role="navigation" aria-label="Settings categories">
+            <div class="h-20 flex items-center px-6 border-b border-zinc-50 dark:border-zinc-950">
+                <button class="flex items-center gap-4 cursor-pointer group outline-none" onclick="window.location.href='/chat.html'" aria-label="Back to chat" title="Back to chat">
+                    <div class="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center transition-all group-hover:scale-90">
                         <i data-lucide="chevron-left" class="w-4 h-4 text-white dark:text-black"></i>
                     </div>
-                    <span class="font-bold text-sm tracking-tight">Settings</span>
+                    <span class="hidden xl:block font-black text-xl tracking-tighter uppercase leading-none">Settings</span>
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto scroller p-4 space-y-8">
+                <div class="space-y-1">
+                    <div class="hidden xl:block px-4 text-[10px] font-black text-zinc-300 dark:text-zinc-700 uppercase tracking-[0.2em] mb-2">Category</div>
+                    <button onclick="Settings.render('profile')" id="nav-profile" class="nav-item w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                        <i data-lucide="user" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                        <span class="hidden xl:block text-sm font-bold">Profile</span>
+                    </button>
+                    <button onclick="Settings.render('privacy')" id="nav-privacy" class="nav-item w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                        <i data-lucide="shield" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                        <span class="hidden xl:block text-sm font-bold">Privacy</span>
+                    </button>
+                    <button onclick="Settings.render('theme')" id="nav-theme" class="nav-item w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                        <i data-lucide="palette" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                        <span class="hidden xl:block text-sm font-bold">Appearance</span>
+                    </button>
+                    <button onclick="Settings.render('backup')" id="nav-backup" class="nav-item w-full flex items-center gap-4 px-4 py-3 rounded-2xl transition-all hover:bg-zinc-100 dark:hover:bg-zinc-900 group">
+                        <i data-lucide="database" class="w-5 h-5 opacity-50 group-hover:opacity-100"></i>
+                        <span class="hidden xl:block text-sm font-bold">Maintenance</span>
+                    </button>
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto scroller p-2 space-y-4">
-                <div class="space-y-0.5">
-                    <button onclick="Settings.render('profile')" id="nav-profile" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded transition-all hover:bg-black/5 dark:hover:bg-white/5 text-zinc-500 group">
-                        <i data-lucide="user" class="w-4 h-4"></i>
-                        <span class="text-sm font-medium">Profile</span>
-                    </button>
-                    <button onclick="Settings.render('privacy')" id="nav-privacy" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded transition-all hover:bg-black/5 dark:hover:bg-white/5 text-zinc-500 group">
-                        <i data-lucide="shield" class="w-4 h-4"></i>
-                        <span class="text-sm font-medium">Privacy</span>
-                    </button>
-                    <button onclick="Settings.render('theme')" id="nav-theme" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded transition-all hover:bg-black/5 dark:hover:bg-white/5 text-zinc-500 group">
-                        <i data-lucide="palette" class="w-4 h-4"></i>
-                        <span class="text-sm font-medium">Appearance</span>
-                    </button>
-                    <button onclick="Settings.render('backup')" id="nav-backup" class="nav-item w-full flex items-center gap-3 px-3 py-2 rounded transition-all hover:bg-black/5 dark:hover:bg-white/5 text-zinc-500 group">
-                        <i data-lucide="database" class="w-4 h-4"></i>
-                        <span class="text-sm font-medium">Maintenance</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="p-4 border-t border-black/5 dark:border-white/5">
-                <button onclick="Auth.logout()" class="w-full py-2.5 bg-zinc-100 dark:bg-zinc-900 text-red-500 rounded font-bold text-xs uppercase hover:bg-red-500 hover:text-white transition-all">
-                    Logout
+            <div class="p-6 border-t border-zinc-50 dark:border-zinc-950">
+                <button onclick="Auth.logout()" class="w-full py-4 bg-zinc-50 dark:bg-zinc-900 text-red-500 rounded-2xl text-xs font-black uppercase tracking-[0.2em] transition-all hover:bg-red-500 hover:text-white active:scale-95">
+                    Terminate Link
                 </button>
             </div>
         </aside>
 
         <!-- MAIN CONTENT (Right) -->
-        <main class="flex-1 h-full bg-white dark:bg-black overflow-y-auto scroller" role="main" aria-label="Settings content">
+        <main id="main-content" class="flex-1 h-full bg-white dark:bg-black overflow-y-auto scroller" role="main">
             <div class="max-w-4xl mx-auto px-8 py-20 lg:px-20" id="settings-content-root">
                 <!-- Data Injection -->
             </div>
