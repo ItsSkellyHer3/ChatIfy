@@ -193,7 +193,7 @@ export const Chat = {
         }
 
         const bubbleClass = isOwn 
-            ? "bg-black text-white dark:bg-white dark:text-black rounded-[1.5rem] rounded-tr-md shadow-lg" 
+            ? "bg-black text-white dark:bg-white dark:text-black rounded-[1.5rem] rounded-tr-md shadow-lg"
             : "bg-gray-100 text-black dark:bg-zinc-900 dark:text-white rounded-[1.5rem] rounded-tl-md";
 
         const avatarHtml = (!isOwn && !isGrouped) ? `

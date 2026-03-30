@@ -1,0 +1,61 @@
+Server initialized for asgi.
+INFO:     Started server process [59162]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:57832 - "WebSocket /?EIO=4&transport=websocket" 403
+
+========================================
+🚀 CHATIFY_CORE: v12.4.0
+🛠️  SYSTEM_STATUS: ONLINE
+========================================
+
+INFO:     127.0.0.1:57842 - "GET /channels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57856 - "GET /users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57860 - "GET /messages/general HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57868 - "GET /users HTTP/1.1" 200 OK
+ocxMtrA0elA0beS0AAAA: Sending packet OPEN data {'sid': 'ocxMtrA0elA0beS0AAAA', 'upgrades': [], 'pingTimeout': 20000, 'pingInterval': 25000, 'maxPayload': 1000000}
+ocxMtrA0elA0beS0AAAA: Received request to upgrade to websocket
+INFO:     127.0.0.1:57882 - "WebSocket /socket.io/?EIO=4&transport=websocket" [accepted]
+ocxMtrA0elA0beS0AAAA: Upgrade to websocket successful
+ocxMtrA0elA0beS0AAAA: Received packet MESSAGE data 0
+ocxMtrA0elA0beS0AAAA: Sending packet MESSAGE data 0{"sid":"TCoHhxbROQ1o0HlCAAAB"}
+ocxMtrA0elA0beS0AAAA: Received packet MESSAGE data 2["identify","palette-test"]
+received event "identify" from TCoHhxbROQ1o0HlCAAAB [/]
+emitting event "user_list_update" to all [/]
+ocxMtrA0elA0beS0AAAA: Sending packet MESSAGE data 2["user_list_update",{"refresh":true}]
+ocxMtrA0elA0beS0AAAA: Received packet MESSAGE data 2["join","general"]
+received event "join" from TCoHhxbROQ1o0HlCAAAB [/]
+TCoHhxbROQ1o0HlCAAAB is entering room general [/]
+emitting event "joined" to TCoHhxbROQ1o0HlCAAAB [/]
+ocxMtrA0elA0beS0AAAA: Sending packet MESSAGE data 2["joined",{"channelId":"general"}]
+[Socket] Connected: TCoHhxbROQ1o0HlCAAAB
+[Socket] TCoHhxbROQ1o0HlCAAAB joined channel general
+INFO:     127.0.0.1:57888 - "GET /users HTTP/1.1" 200 OK
+emitting event "user_list_update" to all [/]
+ocxMtrA0elA0beS0AAAA: Sending packet MESSAGE data 2["user_list_update",{"refresh":true}]
+pzp51pfsZHFU6NDSAAAC: Sending packet OPEN data {'sid': 'pzp51pfsZHFU6NDSAAAC', 'upgrades': [], 'pingTimeout': 20000, 'pingInterval': 25000, 'maxPayload': 1000000}
+pzp51pfsZHFU6NDSAAAC: Received request to upgrade to websocket
+INFO:     127.0.0.1:49344 - "WebSocket /socket.io/?EIO=4&transport=websocket" [accepted]
+pzp51pfsZHFU6NDSAAAC: Upgrade to websocket successful
+[Socket] User left: palette-test
+INFO:     127.0.0.1:49354 - "GET /channels HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49360 - "GET /users HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49362 - "GET /messages/general HTTP/1.1" 200 OK
+pzp51pfsZHFU6NDSAAAC: Received packet MESSAGE data 0
+pzp51pfsZHFU6NDSAAAC: Sending packet MESSAGE data 0{"sid":"LDkvANtnePeziGzdAAAD"}
+[Socket] Connected: LDkvANtnePeziGzdAAAD
+INFO:     127.0.0.1:49370 - "GET /users HTTP/1.1" 200 OK
+pzp51pfsZHFU6NDSAAAC: Received packet MESSAGE data 2["identify","palette-test"]
+received event "identify" from LDkvANtnePeziGzdAAAD [/]
+emitting event "user_list_update" to all [/]
+pzp51pfsZHFU6NDSAAAC: Sending packet MESSAGE data 2["user_list_update",{"refresh":true}]
+pzp51pfsZHFU6NDSAAAC: Received packet MESSAGE data 2["join","general"]
+received event "join" from LDkvANtnePeziGzdAAAD [/]
+LDkvANtnePeziGzdAAAD is entering room general [/]
+emitting event "joined" to LDkvANtnePeziGzdAAAD [/]
+pzp51pfsZHFU6NDSAAAC: Sending packet MESSAGE data 2["joined",{"channelId":"general"}]
+[Socket] LDkvANtnePeziGzdAAAD joined channel general
+INFO:     127.0.0.1:49378 - "GET /users HTTP/1.1" 200 OK
+emitting event "user_list_update" to all [/]
+pzp51pfsZHFU6NDSAAAC: Sending packet MESSAGE data 2["user_list_update",{"refresh":true}]

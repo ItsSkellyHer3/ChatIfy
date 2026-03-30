@@ -49,18 +49,19 @@
     </style>
 </head>
 <body class="transition-colors duration-500">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-black dark:focus:bg-white focus:text-white dark:focus:text-black focus:rounded-md shadow-2xl font-bold text-xs uppercase tracking-widest">Skip to content</a>
 
     <div id="app-shell" class="h-screen w-screen flex overflow-hidden">
         
         <!-- SIDE NAVIGATION (Left) -->
-        <aside class="w-20 xl:w-80 h-full flex flex-col shrink-0 border-r border-zinc-100 dark:border-zinc-900 bg-white dark:bg-black z-30 transition-all duration-500">
+        <aside class="w-20 xl:w-80 h-full flex flex-col shrink-0 border-r border-zinc-100 dark:border-zinc-900 bg-white dark:bg-black z-30 transition-all duration-500" role="navigation" aria-label="Settings categories">
             <div class="h-20 flex items-center px-6 border-b border-zinc-50 dark:border-zinc-950">
-                <div class="flex items-center gap-4 cursor-pointer group" onclick="window.location.href='/chat.html'">
+                <button class="flex items-center gap-4 cursor-pointer group outline-none" onclick="window.location.href='/chat.html'" aria-label="Back to chat" title="Back to chat">
                     <div class="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center transition-all group-hover:scale-90">
                         <i data-lucide="chevron-left" class="w-4 h-4 text-white dark:text-black"></i>
                     </div>
                     <span class="hidden xl:block font-black text-xl tracking-tighter uppercase leading-none">Settings</span>
-                </div>
+                </button>
             </div>
 
             <div class="flex-1 overflow-y-auto scroller p-4 space-y-8">
@@ -93,7 +94,7 @@
         </aside>
 
         <!-- MAIN CONTENT (Right) -->
-        <main class="flex-1 h-full bg-white dark:bg-black overflow-y-auto scroller">
+        <main id="main-content" class="flex-1 h-full bg-white dark:bg-black overflow-y-auto scroller" role="main">
             <div class="max-w-4xl mx-auto px-8 py-20 lg:px-20" id="settings-content-root">
                 <!-- Data Injection -->
             </div>

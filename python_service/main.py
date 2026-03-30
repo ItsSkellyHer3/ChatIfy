@@ -87,8 +87,8 @@ async def lifespan(app: FastAPI):
     # Clear and re-add default channels to ensure they exist
     db.query(Channel).delete()
     db.add_all([
-        Channel(id="general", name="General"), 
-        Channel(id="chill", name="Chill Area"), 
+        Channel(id="general", name="General"),
+        Channel(id="chill", name="Chill Area"),
         Channel(id="dev", name="Development")
     ])
     db.commit()
